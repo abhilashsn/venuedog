@@ -1,0 +1,6 @@
+- if !@city.blank?
+  %p.location
+    see what's happening in
+    %span= "#{@city.name}, #{@city.state}"
+    = link_to "+", root_path("dog" => "fetch")
+

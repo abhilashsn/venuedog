@@ -1,0 +1,228 @@
+$orange: #E75A3E;
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$grey:#a4a4a4;
+$font-sans:"Droid Sans", arial, helvetica, sans-serif;
+$font-serif: "museo-slab", Georgia, serif;
+
+
+
+/* Category Show */
+.event_show{
+
+  #featured_event_container {
+    background-color: #e8eef3;
+    width:480px;
+    height:190px;
+    padding:10px;
+    margin-bottom:10px;
+    position:relative;
+    h2{
+      padding:0;margin:0;
+      font-weight:normal;
+    }
+    img{margin:5px 0 0 10px;}
+    .title{
+      padding:0;margin:8px 0 0 0;
+      font-size:14px;
+      font-weight:bold;
+    }
+    .description{
+      padding:0;margin:8px 0 0 0;
+    }
+    .read_more{
+      position:absolute;
+      bottom:10px;
+      margin:0;padding:0;
+      font-size:12px;
+      font-weight:bold;
+      a{
+        color:$dark_blue;
+        text-decoration:underline;
+        &:hover{
+          text-decoration:none;
+          color:$orange;
+        }
+      }
+    }
+  }/*  End featured widget */
+
+
+  .children{
+    width:150px;
+    height:205px;
+    color: #fff;
+    background-color: #59738a;
+    padding-bottom:5px;
+    ul{
+      margin:0;padding:0 0 0 10px;
+    }
+    li.head{
+      font-family:$font-serif;
+      font-size:14px;
+    }
+    li{
+      margin-top:5px;
+      p{
+        margin:0;
+        padding:0;
+      }
+      a{
+        font-size:16px;
+        color:#fff;
+        &:hover{
+          color:$pale_blue;
+          text-decoration:underline;
+
+        }
+      }
+    }
+  }
+
+
+
+
+
+}
+
+/*  Events list on categories#show and venues#all_events , and search*/
+.venue_all_events .events, .event_show .events, .search .events{
+    margin:20px 0;
+    .event{
+      .details{
+        margin-left:80px;
+        border-bottom:2px $dark_blue dotted;
+        min-height:70px;
+        margin-bottom:10px;
+        p{
+          margin:3px 0;padding:0;
+        }
+        .title{
+          a{
+            color:$orange;
+            font-weight:bold;
+            font-size:16px;
+          }
+        }
+
+      }
+    }
+}
+
+
+.search ul.categories{
+  li{margin-right:20px;}
+    
+}
+
+
+ul.event_list {
+	list-style: none !important;
+}
+
+ul.event_list li {
+	padding-left: 0 !important;
+	margin-bottom: 5px;
+}
+
+ul.event_list h4 {
+	border-bottom: none;
+	font-family: 'Open Sans';
+	margin-bottom: 0;
+}
+
+ul.event_list p {
+	margin-bottom: 0;
+	font-size: 12px;
+}
+
+ul.event_list li {
+
+  overflow:auto;
+
+}
+
+
+ul.featured_event li {
+
+  padding-left: 0 !important;
+  margin-bottom: 5px
+
+}
+
+ul.featured_event li {
+
+  overflow:auto;
+
+}
+
+ul.narrow {
+  padding-left: 20px;
+  font-size: 15px;
+  list-style: none !important;
+
+}
+
+ul.narrow li {
+  margin-top:10px;
+  overflow:auto;
+
+}
+
+
+
+
+.floatleft{
+
+  float:left;
+  margin: 0 15px 15px 0;
+
+}
+
+.floatright{
+
+  float:right;
+  margin:10px;
+
+}
+
+
+.floatrightnarrow{
+
+  float:right;
+  margin:2px;
+
+}
+
+hr {
+  background: transparent;
+  border: 0 0 1px 0;
+  border-style: dashed;
+  border-color: #000;
+}
+
+
+
+.category_index{
+  ul{
+    margin:15px 0;  
+    li{
+      a{margin-right:6px;}
+    }
+  }
+  p.head{font-size:20px;
+   a{color:$dark_blue;}
+  }
+  p.icon{padding:10px 0 0 90px; min-height:100px;}
+  p.arts_and_culture{background:#fff url( asset-path("categories/artsculture.jpg", image) ) 0 0 no-repeat;}
+  p.music{background:#fff url( asset-path("categories/music.jpg", image) ) 0 0 no-repeat;}
+  p.nightlife{background:#fff url( asset-path("categories/nightlife.jpg", image) ) 0 0 no-repeat;}
+  p.education{background:#fff url( asset-path("categories/education.jpg", image) ) 0 0 no-repeat;}
+  p.outdoor{background:#fff url( asset-path("categories/outdoor.jpg", image) ) 0 0 no-repeat;}
+  p.sports{background:#fff url( asset-path("categories/sports.jpg", image) ) 0 0 no-repeat;}
+  p.community{background:#fff url( asset-path("categories/community.jpg", image) ) 0 0 no-repeat;}
+  p.kids_and_family{background:#fff url( asset-path("categories/family.jpg", image) ) 0 0 no-repeat;}
+
+}

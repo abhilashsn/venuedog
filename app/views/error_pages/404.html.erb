@@ -1,0 +1,27 @@
+<div id="content" class="page event events_success error404">
+
+  <h1>Whoops.</h1>
+
+  <p class="align_center highlight_blue"><%= image_tag "scaffold/dog-poster.jpg" %></p>
+  <p class="align_center dark_blue large"><strong>Looks like we got lost<br />somewhere along the way.</strong></p>
+
+
+  <div class="dashboard">
+    <p class="align_center medium">Let's try something else</p>
+    <p class="align_center links orange">
+      <%= link_to "Browse Events", events_path, :class=>"view_event icon-events" %>
+      <%= link_to "Browse Venues", venues_path, :class=>"view_event icon-venues" %>
+      <%= link_to "Add an event", new_event_path, :class=>"view_event icon-add" %>
+    </p>
+    <p class="align_center links orange">
+      <%= link_to "Return to My Dashboard", "/profile", :class=>"view_dashboard icon-return" %>
+    </p>
+  </div>
+
+
+</div>
+
+<%= render "/shared/sidebar" %>
+
+
+<% content_for :page_title, 'Missing Dog' %>

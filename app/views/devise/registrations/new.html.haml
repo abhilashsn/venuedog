@@ -1,0 +1,47 @@
+#content.page.users_new
+
+  .row
+
+    .span
+
+      %h2 Create a Venue Dog account
+    
+    
+      %p.fb
+        %em Signup with your Facebook account to get the most out of Venue Dog. If you don't have Facebook, you can use the form below to create your account.
+      %p.facebook_login= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
+      .sign_up_or
+        %p
+          %span or
+      = clear
+    
+    
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+        = devise_error_messages!
+        = clear
+        %ul
+          %li.half_width.left
+            = f.label :name, "Name*"
+            = f.text_field :name, :required=>"required"
+          %li.half_width.left
+            = f.label :email, "E-mail Address"
+            = f.email_field :email, :required=>"required"
+          = clear_li
+          %li.half_width.left
+            = f.label :password, "Password*"
+            = f.password_field :password
+          %li.half_width.left
+            = f.label :password_confirmation, "Password Confirmation*"
+            = f.password_field :password_confirmation
+          = clear_li
+        = clear
+        = f.submit "Sign up", :class=>"btn btn-orange left"
+        .devise_links.right
+          = render :partial => "devise/shared/links"
+        = clear
+    
+    
+    
+    =# render "/shared/sidebar"
+    - content_for :page_title, "Register for a Venue Dog Account"
+    = render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Register for a Venue Dog Account", :og_description => "Events, Venues, Calendars, and what to do in your city" }

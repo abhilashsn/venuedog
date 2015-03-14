@@ -1,0 +1,111 @@
+<div id="content" class="page venue venue_show">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h1><%= @venue.name %></h1>
+  <%= listify_venue_categories(@venue.venue_categories) %>
+
+  <!-- Venue Description and Photo -->
+  <div class="venue_description">
+    <div class="half left">
+      <p class="address">
+        <%= @venue.street_address if !@venue.street_address.blank? %><br />
+        <%= @venue.city_name if !@venue.city_name.blank? %>, <%= @venue.state if !@venue.state.blank? %>, <%= @venue.zip if !@venue.zip.blank? %><br />
+        <%= @venue.phone if !@venue.phone.blank? %>
+      </p>
+      <p class="website"><%= link_to("visit website", @venue.website, :class => "visit_website", :target=>"_blank") if !@venue.website.blank? %></p>
+
+      <!-- Hours of operation for venue -->
+      <%= render "hours" %>
+
+    </div>
+    <div class="half right">
+      <!-- Image Slider -->
+      <div class="image_carousel_wrap">
+        <div class="image_carousel">
+          <div class="main_image">
+            <%= image_tag @venue.image? ? @venue.image.url(:show) : "http://placehold.it/320x280", :class=> "shadow"  %>
+          </div>
+          <% if !@venue.attachments.blank? %>
+
+              <ul id="preview_slider" class="venue-carousel jcarousel-skin-venue">
+                <li><%= link_to (image_tag @venue.image.url(:venue_show_thumb), :class=>"shadow"), @venue.image.url(:show) %></li>
+                <% @venue.attachments.each do |a| %>
+                  <li><%= link_to (image_tag a.attachment.url(:venue_show_thumbnail), :class=>"shadow"), a.attachment.url(:venue_show) %></li>
+                <% end %>
+              </ul>
+
+              <%= clear %>
+
+          <% end %>
+        </div>
+      </div><!-- end slider -->
+      <div class="social">
+        <p>
+          <%= link_to(image_tag("icons/twitter32.png"), @venue.twitter) if !@venue.twitter.blank? %>
+          <%= link_to(image_tag("icons/facebook32.png"), @venue.facebook) if !@venue.facebook.blank? %>
+          <%= link_to(image_tag("icons/yelp32.png"), @venue.yelp) if !@venue.yelp.blank? %>
+          <%= link_to(image_tag("icons/foursquare32.png"), @venue.foursquare) if !@venue.foursquare.blank? %>
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <%= clear %>
+
+
+
+  <!-- Upcoming Events -->
+  <div class="upcoming_events">
+    <h2>Upcoming Events</h2>
+    <% if @venue.events.upcoming.approved.blank? %>
+      <p>There are no upcoming events at this venue currently listed.</p>
+    <% else %>
+      <% @venue.events.upcoming[0...5].each do |e| %>
+        <div class="event left">
+          <%= link_to image_tag( e.image? ? e.image.url(:event_100x90) : default_image(e.categories, "100x90"), :class=>"shadow"), event_path(e.city, e) %>
+          <p><%= link_to e.name, event_path(e.city, e) %> <span><%= e.start_time.strftime("%m/%d/%Y ") %></span></p>
+        </div>
+      <% end %>
+      <% if @venue.events.upcoming.count > 4 %>
+        <%= clear %>
+        <p class="align_right">
+          <em><%= link_to "See All", all_events_at_venue_path(@venue.city, @venue) %></em>
+        </p>
+      <% end %>
+    <% end %>
+    <%= clear %>
+  </div>
+
+
+
+
+
+  <!-- Description -->
+  <h2>About Venue</h2>
+  <div class="description">
+    <%= @venue.description.html_safe if !@venue.description.blank? %>
+  </div>
+
+
+
+  <!-- Map -->
+  <% if !@venue.google_address.blank? %>
+    <div class="map left">
+      <%= render "google_map" %>
+    </div>
+  <% end %>
+
+  <%= clear %>
+
+
+</div>
+
+<%= render "/shared/sidebar" %>
+
+
+
+
+<% content_for :page_title, venues_show_title(@venue) %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => @venue.name } %>

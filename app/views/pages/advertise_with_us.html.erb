@@ -1,0 +1,41 @@
+<div id="content" class="page">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h2><%= @page.title %></h2>
+
+  <%= @page.content.html_safe if !@page.content.blank? %>
+
+  <%= clear %>
+
+  <%= form_tag("/advertise-with-us", :method => "post", :class =>"well") do %>
+      <label>Name</label>
+      <input type="text" name="name" class="span3" placeholder="Your Name" required="required">
+      <label>E-Mail</label>
+      <input type="email" name="email" class="span3" placeholder="your_email@your_domain.com" required="required">
+      <label>Phone</label>
+      <input type="tel" name="tel" class="span3" placeholder="(555) 555-5555" required="required">
+      <label>Company</label>
+      <input type="text" name="company" class="span3" placeholder="Your Company Name" required="required">
+      <label>City</label>
+      <select name="city" class="span3" required="required">
+      <% City.approved.each do |c| %>
+        <option value="<%= c.name %>" <%= "selected" if @city.name == c.name %>>
+          <%= c.name %>
+        </option>
+      <% end %>
+      </select>
+      <br />
+      <button type="submit" class="btn">Submit</button>
+  <% end %>
+
+</div>
+
+<%= render "/shared/sidebar" %>
+
+
+
+
+<% content_for :page_title, @page.title %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => @page.title } %>

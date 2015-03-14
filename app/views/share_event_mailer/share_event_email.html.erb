@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+
+    <p><%= @your_name %> found an event on VenueDog.com and thinks you would be interested in it! Learn more about <%= @event.name %>, which is scheduled for <%= format_time(@event.start_time) %> at <%= @event.venue.name %>: http://www.venuedog.com/events/<%= @event.id %></p>
+    <p>Thank you and have a great day!<br/>
+       The VenueDog Team
+    </p>
+  </body>
+</html>

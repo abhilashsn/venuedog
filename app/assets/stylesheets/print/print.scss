@@ -1,0 +1,36 @@
+/* Hide unwanted elements */
+@mixin hide{
+  display:none !important; 
+  width:0 !important; 
+  height:0 !important;
+}
+
+
+#container{
+
+  #header{
+    .primary_nav{ @include hide;}
+    .secondary_nav{ @include hide;}
+    .ad_space{ @include hide;}
+    .location{ @include hide;}
+  }
+  #content{
+    .breadcrumbs{ @include hide;}
+    .new_calendar_event{ @include hide;}
+    .calendar_actions{@include hide;}
+    
+  }
+  .event_show{
+    .description img{@include hide;}  
+    .facebook_attendees, .share, .community_events{@include hide;}
+    .location{@include hide;} 
+  } 
+  #sidebar{@include hide;}
+}
+#share_by_email{@include hide;}
+#added_to_calendar{@include hide;}
+.footer-main{@include hide;}
+
+
+#ptTimeSelectCntr{@include hide;}
+.ui-datepicker{@include hide;}

@@ -1,0 +1,37 @@
+#content.page.event.event_index
+
+  = render "/shared/breadcrumbs"
+
+  %p#notice= notice
+
+  / Info Text
+  - if from_homepage
+    .alert.alert-info
+      %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+      %p
+        %strong Heads up!
+        Here you can see all the events happening in Rome, Ga., in the next week. Click an event name to learn more, or use the sidebar to search or browse dates, categories or venues.
+
+
+
+  - @dates = get_unique_event_dates(@events)
+  - @dates.each do |date|
+    - if date.to_date >= @started_at.to_date and date.to_date <= (@started_at + 6).to_date
+      .date
+        %h2.sans= date.strftime("%B #{date.day}, %Y")
+        %ul.unstyled
+          - @events.each do |event|
+            - if event.start_time.to_date == date or (event.start_time.to_date < date and !event.end_time.blank? and event.end_time.to_date >= date )
+              %li= link_to event.name, event_path( @city, event )
+          = clear_li
+        = clear
+      / end day
+  #date_paginate
+    %ul
+      %li= link_to("&laquo; Previous Week".html_safe,events_path(:start_at => "#{(@started_at-7).to_s(:db)}"))
+      %li
+        = "#{@started_at.strftime("%b")} #{@started_at.day} - #{(@started_at+6).strftime("%b")} #{(@started_at+6).day}"
+      %li= link_to("Next Week &raquo;".html_safe,events_path(:start_at => "#{(@started_at+7).to_s(:db)}"))
+= render "/shared/sidebar"
+- content_for :page_title, "Upcoming Events in your area"
+= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Upcoming Events in your area", :og_description => "Events, Venues, Calendars, and what to do in Rome, GA"}

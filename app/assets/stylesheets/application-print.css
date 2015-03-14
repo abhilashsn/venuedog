@@ -1,0 +1,7 @@
+/**
+ *  application-print.css
+ *
+ *= require_self
+ *= require "fonts/application-fonts"
+ *= require_tree ./print
+*/

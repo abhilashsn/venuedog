@@ -1,0 +1,15 @@
+#footer-wrap
+  .page-width.footer-main
+    = render 'shared/hr'
+
+    - if !@city.blank?
+      = link_to "VenueDog", city_path(@city), :class=>"logo"
+    - else
+      = link_to "VenueDog", '/', :class=>"logo"
+
+    = render '/shared/footer_nav'
+    = render '/shared/venue_dog_social_media'
+    = clear
+  %p.align_center.small.footer_copy
+    \&copy;#{Time.now.year} VenueDog LLC &middot; A #{link_to "SAI Digital", "http://saidigital.co", :target=>"_blank"} Project
+  = clear

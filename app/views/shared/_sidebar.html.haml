@@ -1,0 +1,56 @@
+/ Main Sidebar
+#sidebar
+  - if !(params[:controller] == "pages" and params[:action] == "homepage" )
+    / My Calendar Widget
+    .mycalendar.widget.dark_blue_gradient
+      %h2 My Calendar
+      / Calendar Events
+      .calendar_events.hide
+        - if user_signed_in?
+          - @cal_events = current_user.upcoming_calendar_events.collect{ |e| e.event }.uniq
+          - if @cal_events.blank?
+            %p There are currently no events saved to your calendar.
+          - else
+            %ul.unstyled.no_padding
+              - @cal_events.each do |e|
+                - if !e.blank?
+                  %li
+                    %strong= link_to e.name, event_path( e.city, e )
+
+      / User control
+      %p.control
+        - if user_signed_in?
+          = link_to "Expand", '', :class=>"left expand"
+          %span.right
+            %strong= link_to "My Dashboard", "/profile"
+        - else
+          %span.right.signin
+            %strong= link_to "Login", new_user_session_path
+            or
+            %strong= link_to "Register", new_user_registration_path
+            to save events
+        %span.clear
+      = clear
+
+
+  - if !@city.blank?
+    / Search Widget
+    .search.widget.orange_gradient
+      %h2 Search
+      = form_tag search_path(@city), :method => 'get', :class=>"form-search" do
+        = text_field_tag :search, params[:search], :class=>"search-query", :placeholder=>"search..."
+        = submit_tag "Go", :name => nil, :class=>"btn"
+        = clear
+
+      %p.location.sans
+        .right
+          = link_to "change city", root_path( "dog" => "fetch" )
+        %strong= "in #{@city.name}, #{@city.state}"
+
+
+      = clear
+
+
+  = render "/events/browse_by_widget"
+  = render "/ad_spaces/sidebar_main"
+  = clear

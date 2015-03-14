@@ -1,0 +1,217 @@
+% Venuedog Developer's Guide
+% Sean Brewer (sean@saidigital.co)
+%
+
+Notice
+======
+
+The documentation in the repository must *always* be the most up-to-date documentation available. Compiling the documentation and copying it over to Google Docs is fine, but any changes made to the documentation
+must happen in the repository **first**.
+
+Repository
+==========
+
+The Venuedog repository is currently kept in git.
+The repository URL is: `gitosis@saidev.co:venuedog.git`.
+
+Checkout Procedure
+------------------
+
+###Checking Out The Repository
+
+To checkout the repository, open up a terminal and run:
+
+`git clone gitosis@saidev.co:venuedog`
+
+If you are not able to clone the repo, repository access control is probably not setup for you. See the Access Control section for more details.
+
+###Updating
+
+If you know of changes that have been made that have been committed, you need to pull the updates from the repository. To do this, run:
+
+`git pull`
+
+###Committing Changes
+
+After you make changes to the source, the following procedure will push the changes to the repository:
+
+* From a terminal, to add newly created files, run, preferably from the root directory of the project: `git add .`
+* To commit the changes, preferably from the root directory, run: `git commit -a -m "My commit message here"`
+* To push the commit to the repository server run: `git push`
+
+
+However, you must first have write access to the repository, or you will not be allowed to check out the project. See the Access Control section for more details.
+
+Access Control
+--------------
+
+It is possible that new members will need to be added or members removed from write access in Venuedog.
+Assuming you have write access to the gitosis configuration, you can change write access for a team member.
+
+###Removing Write Access From A Team Member
+
+1. From a terminal run `git clone gitosis@saidev.co:gitosis-admin.git` if you have not already cloned the repository.
+2. `cd` into `gitosis-admin` and open up `gitosis.conf` with your favorite text editor. The configuration file should look something like this:
+
+    [gitosis]
+
+    [group team]
+
+    writable = venuedog
+
+    members = sean richard engineyard
+
+    [group gitosis-admin]
+
+    members = sean richard
+
+    writable = gitosis-admin
+
+3. To remove members from `[group team]`, remove the specific team member's keyfile name from the members variable. The names listed in the variable are derived from the keyfile names in the `keyfiles` folder. According to this configuration, we have `sean.pub`, `richard.pub`, and `engineyard.pub` public keys folder. So, if we wanted to remove the write access from `sean` we would remove the `sean` entry in the `[group team]` section.
+4. After you're finished editing, run `git add .`, preferably from the root directory.
+5. Run `git commit -a -m "I removed PERSON_HERE's write access to Venuedog."`
+6. Run `git push` .
+
+
+###Adding Write Access For A Team Member
+
+1. From a terminal run `git clone gitosis@saidev.co:gitosis-admin.git` if you have not already cloned the repository.
+2. If the team member does not already have a public key, have them generate one on their machine with this command: `ssh-keygen -t rsa -C "your_email@youremail.com"`. Follow the instructions, and your public key is probably stored in `~/.ssh/id_rsa.pub`
+3. You will need to `cd` into gitosis-admin and put the keyfile into the `keyfiles` folder. The key contained in `id_rsa.pub` should go in a file named `thepersonsname.pub` in the `keyfiles` folder. Make arrangements to do this.
+4. At this point, you should have a new key named `thepersonsname.pub`. `cd` back into `gitosis-admin` and open up `gitosis.conf` with your favorite text editor. The configuration file should look something like this:
+
+  [gitosis]
+
+  [group team]
+
+  writable = venuedog
+
+  members = sean richard engineyard
+
+  [group gitosis-admin]
+
+  members = sean richard
+
+  writable = gitosis-admin
+
+5. To add the member to `[group team]`, add the specific team member's keyfile name from the members variable. The names listed in the variable are derived from the keyfile names in the `keyfiles` folder. According to this configuration, we have `sean.pub`, `richard.pub`, and `engineyard.pub` public keys folder. So, if we wanted to add write access to `thenewguy` we would add the `thenewguy` entry in the `[group team]` section.
+6. After you're finished editing, run `git add .`, preferably from the root directory.
+7. Run `git commit -a -m "I added write access for PERSON_HERE to Venuedog."`
+8. Run `git push` .
+
+Development Environment
+=======================
+
+The Venuedog application was created using Ruby on Rails 3.1. As of this writing, Ruby on Rails 3.1 is about a month old. Our reasoning for using such a new release is that the Ruby on Rails platform changes rapidly, and the newer the release we could use, the less headache it would be for the customer to find developers that have experience with it.
+
+Setting Up
+----------
+
+Setting up the development environment after you have cloned the repository is not difficult if you are using a UNIX or UNIX-like operating system. Linux or Mac OS X are ideal. Any of the BSDs should be fine. If you're trying to setup your development environment in Windows, good luck with that.
+
+###Installing RVM
+
+If you already have RVM installed, then you can skip to the next section.
+
+Installing RVM is fairly straightforward. You need Git and curl installed for the installation to work.
+
+To install RVM, open up a terminal and enter the following command:
+
+`bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)`
+
+After installation, RVM will give you some tips on the libraries it needs to build Ruby. For Ubuntu users, running this:
+
+`sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison`
+
+should get you going.
+
+###Setting Up The Environment
+
+After RVM has been installed successfully, `cd` into the cloned repository. When you get into the directory, RVM will ask you if you want to trust the project rvmrc. You want to, so choose `y[es]`.
+
+Once you accept the project .rvmrc, you can begin the setup process.
+
+Now, you need to install bundler. There is a strange bug in bundler 1.0.20 that won't allow the installation of one of the gems. If this is fixed in a newer release, it is highly recommended that you upgrade. To install the latest release of bundler without the bug run:
+
+`gem install bundler -v '1.0.18'`
+
+If this completed successfully run:
+
+`bundle install`
+
+If everything was successful, the setup of your environment is almost complete. If something went wrong, it is possible that you might not have some of the development libraries to install the gems. The most common missing library is libmysqlclient-dev. To install it in Ubuntu run:
+
+`sudo apt-get install libmysqlclient-dev`
+
+Then run `bundle install` again.
+
+###Installing The Engine Yard CLI
+
+Since we're deploying the application to Engine Yard, the Engine Yard command line application will be really useful. To install it, make sure you're in the repository directory and run:
+
+`gem install engineyard`
+
+The application should install quickly. To see instructions for the Engine Yard application run:
+
+`ey help`
+
+Before you use the Engine Yard application, you must add your RSA public keys to your Engine Yard instance. Please see the Hosting chapter for more details.
+
+
+Hosting
+=======
+
+We are using Engine Yard, which is one of the two largest Ruby-oriented Platforms as a Service. Engine Yard is located at http://www.engineyard.com.
+
+Setting Up
+----------
+
+One of the first steps, putting the Engine Yard public key into your Gitosis keys and configuration is already done for you if you need to change that I will add some documentation for that later.
+
+###Adding Your Public Key To Engine Yard
+
+You will need to add your public key to Engine Yard so that you may deploy, run updates, etc.
+
+1. Login to Engine Yard.
+2. On the navigation bar on the left-hand side of the page, you will see "SSH Public Keys." Click "SSH Public Keys."
+3. You should now see "SSH Public Keys" header on the center-left of the page. To the right of that, there is a "Add a new SSH public key" button. Click the "Add a new SSH public key" button.
+4. Here, you will see a "Name" textbox and a "Public Key" textbox. Give your key a name in the "Name" textbox. Your RSA public key (that is probably stored in `~/.ssh/id_rsa.pub`) will go in the "Public Key" textbox. After all of that information is entered, click "Add Key."
+5. Your public key is now saved, and at this point, you should be allowed to run deployments and other updates through Engine Yard.
+
+##Deployment
+
+After your public key has been given to Engine Yard, you may now run deployments.
+
+
+###First Steps
+In general, it is probably a good idea to re-compile all of your assets before you
+deploy. To do this, run:
+
+`rake assets:precompile`
+
+Then, from the root directory of the project, commit your changes:
+
+`git add .`
+
+`git commit -a -m "Your notes go here."`
+
+`git push`
+
+###Deployment Methods
+
+The easiest way to deploy is to use the Engine Yard gem and run:
+
+`ey deploy`
+
+from the project directory.
+
+###Migrations
+
+If you need the deployment to run a migration do:
+
+`ey deploy -m`
+
+The `-m` argument will run `rake db:migrate` by default. You can also tell it specifically what
+kind of migration you want to run. For instance, if you want to rollback a migration you would do:
+
+`ey deploy -m rake db:rollback`

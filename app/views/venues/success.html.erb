@@ -1,0 +1,20 @@
+<div id="content" class="page event events_success venues_success">
+  <%= render "/shared/breadcrumbs" %>
+
+  <h1>Thank You!</h1>
+
+  <p class="align_center highlight_blue"><strong>We are reviewing your submitted venue<br />information and we'll email you when it's approved.</strong></p>
+
+
+  <p class="align_center links orange">
+    <%= link_to "Add an event", new_event_path, :class=>"view_event left icon-search" %>
+    <%= link_to "Return to My Dashboard", "/profile", :class=>"view_dashboard right icon-return" %>
+    <%= clear %>
+  </p>
+
+</div>
+
+<%= render "/shared/sidebar" %>
+
+
+<% content_for :page_title, 'New Venue Created' %>

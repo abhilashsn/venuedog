@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+
+    <p>Hi <%= @your_name %>!</p>
+    <p>Here's your friendly reminder of an event you wanted to remember:</p>
+    <p><%= @event.name %></p>
+    <p><%= format_time(@event.start_time) %></p>
+    <p><%= @event.location_name %></p>
+
+    <p>For full event details, click here: <a href="http://www.venuedog.com/events/<%= @event.id %>">http://venuedog.com/events/<%= @event.id %></a></p>
+
+    Have an awesome time!
+    <br />
+    VenueDog
+  </body>
+</html>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event: 
+  name: MyString
+  longitude: MyString
+  latitude: MyString
+
+two:
+  event: 
+  name: MyString
+  longitude: MyString
+  latitude: MyString

@@ -1,0 +1,14 @@
+<div id="content" class="page venue venue_manage venue_new">
+  <%= render "/shared/breadcrumbs" %>
+
+  <h1>Add a venue</h1>
+
+  <%= render 'form' %>
+
+</div>
+<%= render "/shared/sidebar" %>
+
+
+<% content_for :page_title, "Create a new Venue" %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Create a new Venue" } %>

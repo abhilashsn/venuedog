@@ -1,0 +1,12 @@
+%ul.secondary_nav
+
+  %li= link_to 'About', '/pages/about/'
+  %li= link_to 'Advertise with Us', '/pages/advertise-with-us/'
+  %li= link_to 'Contact', '/pages/contact-us/'
+  %li= link_to 'FAQs', '/pages/faqs'
+  %li= link_to 'Privacy Policy', '/pages/privacy-policy'
+  %li= link_to 'Blog', 'http://blog.venuedog.com'
+  - if !user_signed_in?
+    %li= link_to 'Sign In', new_user_session_path
+  - else
+    %li= link_to 'My Profile', "/profile"

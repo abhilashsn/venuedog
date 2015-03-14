@@ -1,0 +1,48 @@
+.choose-city
+
+  %h1 Where are you hunting?
+  %h2 (choose your city)
+  
+  .row
+    .span6
+    
+      %hr
+    
+      .row
+      
+        - @states.each do |state, cities|
+      
+          .span3
+            %h3= State::STATE_ABBR[state]
+      
+            %form{ :class => "choose_city" }
+              %ul.unstyled
+                %select
+                  %option{ value: '' }= "#{cities.count} cities"
+                  - cities.each do |city|
+                    %option{ value: city.slug }= city.name
+  
+  
+    .span3
+      - @ad = Ad.sidebar_250x250.on_global_homepage.first
+      - if !@ad.blank?
+        
+        = link_to( image_tag( @ad.image), @ad.destination, :onclick=> ga_ad_click(@ad.advertiser.name, @ad.name, @ad.destination), :target=>"_blank" )
+        = content_for :footer_js, ga_track_ad_impression(@ad)
+  
+      .clearfix
+  
+     
+      - @ads = Ad.sidebar_120x240.on_global_homepage.limit(2).uniq
+  
+      - if !@ads.first.blank? and !@ads.first.image.blank?
+        - @ad = @ads.first
+        = link_to( image_tag( @ad.image), @ad.destination, onclick: ga_ad_click(@ad.advertiser.name, @ad.name, @ad.destination), target: "_blank", class: "pull_left" )
+        = content_for :footer_js, ga_track_ad_impression(@ad)
+  
+      - if @ads.count > 1 and !@ads.last.blank? and !@ads.last.image.blank?
+        - @ad = @ads.last
+        = link_to( image_tag( @ad.image), @ad.destination, onclick: ga_ad_click(@ad.advertiser.name, @ad.name, @ad.destination), target: "_blank", class: "pull_right" )
+        = content_for :footer_js, ga_track_ad_impression(@ad)
+  
+      .clearfix

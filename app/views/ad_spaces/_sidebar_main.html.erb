@@ -1,0 +1,47 @@
+
+<!-- Ad Full Width -->
+<div class="ad full_ad">
+  <%# @ad_full = Ad.sidebar_250x250.first %>
+  <% on_homepage? ? @ad_full = @city.ads.sidebar_250x250.on_homepage.first : @ad_full = @city.ads.sidebar_250x250.first %>
+
+  <% if !@ad_full.blank? %>
+    <%= link_to( image_tag( @ad_full.image), @ad_full.destination, :onclick=> ga_ad_click(@ad_full.advertiser.name, @ad_full.name, @ad_full.destination), :target=>"_blank" ) %>
+    <% content_for :footer_js, ga_track_ad_impression(@ad_full) %>
+  <% else %>
+    <!-- Leave buffer, scopes pull by active date -->
+    <p class="align_center"><%= link_to "Claim this ad", "" %></p>
+  <% end %>
+</div>
+
+
+
+
+
+<!-- Two column ads -->
+<div class="ad ad_double">
+
+  <% on_homepage? ? @ad = @city.ads.sidebar_120x240.on_homepage.uniq : @ad = @city.ads.sidebar_120x240.uniq %>
+
+  <div class="ad_single left">
+    <% if !@ad.first.blank? and !@ad.first.advertiser.blank? %>
+       <%= link_to( image_tag(@ad.first.image), @ad.first.destination, :onclick=> ga_ad_click(@ad.first.advertiser.name, @ad.first.name, @ad.first.destination), :target=>"_blank" ) %>
+      <% content_for :footer_js, ga_track_ad_impression(@ad.first) %>
+    <% else %>
+      <!-- Leave buffer, scopes pull by active date -->
+      <%= link_to( image_tag("http://c953364.r64.cf2.rackcdn.com/images/8/original/advertisehere_120x240ad.png"), "http://www.venuedog.com/advertise-with-us/", :onclick=> ga_ad_click("VenueDog", "VenueDog Vert", "http://www.venuedog.com/advertise-with-us/"), :target=>"_blank" ) %>
+
+    <% end %>
+  </div>
+
+  <div class="ad_single right">
+    <% if !@ad.second.blank? and !@ad.second.advertiser.blank? %>
+       <%= link_to( image_tag(@ad.second.image), @ad.second.destination, :onclick=> ga_ad_click(@ad.second.advertiser.name, @ad.second.name, @ad.second.destination), :target=>"_blank" ) %>
+      <% content_for :footer_js, ga_track_ad_impression(@ad.second) %>
+    <% else %>
+      <!-- Leave buffer, scopes pull by active date -->
+      <%= link_to( image_tag("http://c953364.r64.cf2.rackcdn.com/images/8/original/advertisehere_120x240ad.png"), "http://www.venuedog.com/advertise-with-us/", :onclick=> ga_ad_click("VenueDog", "VenueDog Vert", "http://www.venuedog.com/advertise-with-us/"), :target=>"_blank" ) %>
+    <% end %>
+  </div>
+
+  <%= clear %>
+</div>

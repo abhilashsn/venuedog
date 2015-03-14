@@ -1,0 +1,74 @@
+/* Fonts */
+@import "http://fonts.googleapis.com/css?family=Droid+Sans:400,700";
+
+
+
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010-2011 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      exljbris
+ * License URL: http://www.fontspring.com/fflicense/exljbris
+ *
+ *
+ */
+@font-face {
+  font-family: 'MuseoSans500';
+  src: url('assets/fonts/museo_sans_500/MuseoSans_500-webfont.eot');
+  src: url('assets/fonts/museo_sans_500/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'),
+       url('assets/fonts/museo_sans_500/MuseoSans_500-webfont.woff') format('woff'),
+       url('assets/fonts/museo_sans_500/MuseoSans_500-webfont.ttf') format('truetype'),
+       url('assets/fonts/museo_sans_500/MuseoSans_500-webfont.svg#MuseoSans500') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MuseoSans500Italic';
+    src: url('assets/fonts/museo_sans_500_italic/MuseoSans_500_Italic-webfont.eot');
+    src: url('assets/fonts/museo_sans_500_italic/MuseoSans_500_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/fonts/museo_sans_500_italic/MuseoSans_500_Italic-webfont.woff') format('woff'),
+         url('assets/fonts/museo_sans_500_italic/MuseoSans_500_Italic-webfont.ttf') format('truetype'),
+         url('assets/fonts/museo_sans_500_italic/MuseoSans_500_Italic-webfont.svg#MuseoSans500Italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MuseoSlab500';
+    src: url('assets/fonts/museo_slab_500/Museo_Slab_500-webfont.eot');
+    src: url('assets/fonts/museo_slab_500/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/fonts/museo_slab_500/Museo_Slab_500-webfont.woff') format('woff'),
+         url('assets/fonts/museo_slab_500/Museo_Slab_500-webfont.ttf') format('truetype'),
+         url('assets/fonts/museo_slab_500/Museo_Slab_500-webfont.svg#MuseoSlab500') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MuseoSlab500Italic';
+    src: url('assets/fonts/museo_slab_500_italic/Museo_Slab_500italic-webfont.eot');
+    src: url('assets/fonts/museo_slab_500_italic/Museo_Slab_500italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('assets/fonts/museo_slab_500_italic/Museo_Slab_500italic-webfont.woff') format('woff'),
+         url('assets/fonts/museo_slab_500_italic/Museo_Slab_500italic-webfont.ttf') format('truetype'),
+         url('assets/fonts/museo_slab_500_italic/Museo_Slab_500italic-webfont.svg#MuseoSlab500Italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,45 @@
+#content.page.event.events_success
+  = render "/shared/breadcrumbs"
+
+
+  %h1 Success!
+  %p.align_center.highlight_blue
+    %strong Your event has been created.
+  %p.align_center.highlight_blue
+    %strong
+      Now, time to get the word out! We have several
+      %br/
+      free or low-cost tools to get your event some serious exposure:
+
+
+  %h2 Promote Your Event on VenueDog
+  %p.align_center Have your event highlighted in our "Featured Events" banner on the homepage for a small fee.
+  %p.align_center.links.orange
+    = link_to "Learn More", "/pages/promote-events", :class=>"icon-learnmore"
+
+
+  %h2 Promote Your Event Everywhere Else
+  %p.align_center
+    Use our free sharing tools on your event page to email, tweet, or post the event in your
+    %br/
+    social networks.
+  %p.align_center.links.orange
+    = link_to "View and Share My Event", event_path( @event.city, @event ), :class=>"icon-search"
+
+
+  %h2 Maintain &amp; Monitor Your Event
+  %p.align_center
+    This event is now located on your profile dashboard. Feel free to visit your profile anytime to
+    %br/
+    edit event details as needed and view the number of VenueDog users who are attending.
+
+  %p.align_center.links.orange
+    = link_to "Return to My Dashboard", "/profile", :class=>"icon-return"
+
+
+  %p.align_center.disclaimer
+    %strong Event Listing Disclaimer
+
+  %p.align_center.small We want our users to find wonderful and relevant events across the cities they live, work, and play in, so we reserve the right to edit or remove a listing. Profanity, sexually explicit content, spam, and/or hate speech will be cause for removal of the event from our listings. Edits may include correct categorization or linking to an official venue.
+= render "/shared/sidebar"
+- content_for :page_title, @event.name + ' Event Created'

@@ -1,0 +1,116 @@
+- content_for :head do
+  %meta{:content => @event.name, :property => "og:title"}/
+  %meta{:content => "activity", :property => "og:type"}/
+  %meta{:content => "http://#{request.host+request.fullpath}", :property => "og:url"}/
+  %meta{:content => @event.image? ? @event.image.url(:event_show) : default_image(@event.categories, "320x235"), :property => "og:image"}/
+  %meta{:content => "Venue Dog", :property => "og:site_name"}/
+  %meta{:content => "296478800397149", :property => "fb:app_id"}/
+  %meta{:content => truncate(decode_entities(strip_tags(@event.description).lstrip).gsub('"',"'"), :length => 140), :property => "og:description"}/
+
+
+#content.page.event.event_show
+  = render "/shared/breadcrumbs"
+  - if !notice.blank?
+    / New event notice
+    .alert.alert-success
+      %a.close{"data-dismiss" => "alert"} &times;
+      %strong Well done!
+      = notice
+
+
+  / Add to calendar functions
+  = render "calendar_actions"
+
+
+  %h2= @event.name
+
+
+  / Breadcrumb for categories
+  - @event.categories.collect{ |r| r.root }.uniq.each do |root|
+    %p.categories_list
+      - subs = []
+      - @event.categories.each do |c|
+        - if c.root == root and !c.root?
+          - subs << link_to( c.name, category_path(@city, c) )
+
+      = link_to root.name, category_path( @city, root )
+      - if !subs.blank?
+        \&rarr;
+        \#{subs.join(', ').html_safe}
+
+  %p.small.italic.tags
+    = listify_tags(@event.labels)
+    %span.clear
+
+  = clear
+
+
+  / Description and Image
+  .description
+    .left.half_width
+      %ul
+        = render "description_list"
+    .right.half_width
+      = image_tag @event.image? ? @event.image.url(:event_show) : default_image(@event.categories, "320x235"), :class=>"shadow right"
+    = clear
+    .event_description
+      = @event.description.html_safe if !@event.description.blank?
+  .facebook_attendees
+    .fb-like{"data-send" => "false", "data-show-faces" => "true", "data-width" => "450"}
+  .location
+    %h3 Location
+    .map.left.no_padding
+      - if !@event.google_address.blank?
+        = render :partial => "google_map", :locals => {:address => @event.google_address, :width=>"570", :height=>"300" }
+    .share.right
+      %ul.pale_blue.rounded
+        %li Share
+        %li
+          %p
+            %a.email{"data-target" => "#share_by_email", "data-toggle" => "modal", :href => "#"} E-Mail
+        %li
+          %p= link_to "Facebook", "", :class=>"facebook"
+        %li
+          %p= link_to "Twitter", "", :class=>"twitter"
+        %li
+          %p= link_to "Add", "", :class=>"add"
+        %li
+          %p= link_to "Print", "", :class=>"print"
+    = clear
+  .community_events
+    %h3 Similar Events
+    - @event.categories.map{|x| x.events.upcoming.approved}.flatten.uniq.find_all{|y| y.id != @event.id}[0..4].each do |e|
+      .left.event
+        = link_to image_tag( e.image? ? e.image.url(:event_show_thumb) : default_image(e.categories, "100x100") ), event_path(e.city, e)
+        %p
+          = link_to e.name, event_path(e.city, e)
+          %span= e.start_time.strftime("%m/%d/%Y ")
+    = clear
+
+= render "/shared/sidebar"
+- content_for :page_title, events_show_title(@event)
+
+
+/ Share By Email
+#share_by_email.modal.hide.fade
+  .modal-header
+    %a.close{"data-dismiss" => "modal", :href => "#"} &times;
+    %h3 Share by Email
+  .modal-body
+    = form_for :email_share_event, :url => { :action => "share_event_email" }, :html => {:class => "form-stacked"} do |f|
+      = f.hidden_field(:event_id, :value => @event.id)
+      = f.label :your_name
+      = f.text_field :your_name, :required=>'required'
+      = f.label :email, 'Recipient email'
+      = f.email_field :email, :size => 60, :required=>'required'
+      .well
+        %p.small
+          I found an event on VenueDog.com and think you would be interested in it! Learn more about #{@event.name}, which is scheduled for #{format_time(@event.start_time)} at #{@event.venue.name}: http://www.venuedog.com/events/#{@event.id}
+        %p.small
+          Thank you and have a great day!
+          %br>/
+          The VenueDog Team
+  .modal-footer
+    = submit_tag "Send Email", :class => 'btn primary'
+
+

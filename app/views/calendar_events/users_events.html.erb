@@ -1,0 +1,109 @@
+<div id="content_full" class="users_profile users_calendar users_events">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h2>My Event Listings</h2>
+
+
+  <!-- Profile Sidebar -->
+  <div class="profile_sidebar no_padding left">
+
+   
+    <!-- Profile Image and Name Card -->
+    <div class="profile_card dark_blue_gradient">
+      <p class="align_center no_padding">
+        <%= image_tag "user/default-user.jpg" %>
+      </p>
+      <p><strong><%= @user.name %></strong> <span class="right"></span></p>
+      <p><strong><%= @user.email %></strong></p>
+      <p><em>preferred city:</em></p>
+      <h2 class="white sans"><strong>Rome, GA</strong></h2>
+      <p class="align_right small no_padding"><%= link_to "Edit", edit_user_registration_path, :class=>"orange" %></p>
+    </div>
+
+    <!-- Ad spaces on profile -->
+    <div class="ad_wrap">
+      <%= render "/ad_spaces/sidebar_main" %>
+    </div>
+
+    <%= clear %>
+  </div>
+
+
+
+  <div class="content">
+    
+    <!-- Alert -->
+    <% if !notice.blank? %>
+      <!-- New event notice -->
+      <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <%= notice %>
+      </div>
+    <% end %>
+
+
+    <!-- Tabbed Upcoming and Archived Events -->
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Upcoming</a></li>
+        <li><a href="#tabs-2">Archived</a></li>
+      </ul>
+
+      <div id="tabs-1" class="upcoming">
+        <% if !@events.blank? %>
+          <table class="align_center">
+            <% @events.each do |e| %>
+              <tr>
+                <td class="name"><strong><%= link_to e.name, event_path(e) %></strong></td>
+                <td class="small"><%= e.start_time.strftime("%A, %b. %e @ %l:%M %p") %></td>
+                <td class="small"><%= people_attending_helper(e.calendar_events.count) %></td>
+                <td class="action align_bottom last">
+                    <%= link_to "Remove", event_path(e),:method => "delete", :confirm => "Are you sure?", :class => "user_icons remove right" %>
+                    <%= link_to "Edit", edit_event_path(e), :class=>"user_icons edit right" %>
+                    <%= link_to "View", event_path(e), :class=>"user_icons view right" %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+  
+        <% else %>
+          <p class="blank">
+            You have not currently added events to VenueDog.<br />
+            <%= link_to "Create new event", new_event_path, :class=>"btn btn-info" %>
+          </p>
+        <% end %>
+      </div>
+
+
+      <div id="tabs-2" class="archive">
+        <% if !@past_events.blank? %>
+          <table class="align_center">
+            <% @past_events.each do |e| %>
+               <tr>
+                  <td class="name"><strong><%= link_to e.name, e %></strong></td>
+                  <td class="small"><em><%= link_to e.venue.name, e.venue %></em></td>
+                  <td class="small"><em><%= e.start_time.strftime("%A, %b. %e @ %l:%M %p") %></em></td>
+               </tr>
+            <% end %>
+          </table>
+        <% else %>
+          <p class="blank">
+            You have no past events on VenueDog.<br />
+            <%= link_to "Create new event", new_event_path, :class=>"btn btn-info" %>
+          </p>
+
+        <% end %>
+      </div>
+
+
+    </div><!-- End of tabs -->
+
+
+  </div>
+</div>
+
+
+
+
+<% content_for :page_title, "My Events" %>

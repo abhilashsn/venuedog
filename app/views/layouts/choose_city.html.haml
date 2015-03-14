@@ -1,0 +1,45 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:page_title) ? yield(:page_title) : "VenueDog"
+      | Events calendar, Venues, and What To Do in your city
+    %meta{:content => content_for?(:meta_description) ? yield(:meta_description) : meta_description, :name => "description"}/
+    %meta{:content => content_for?(:meta_keywords) ? yield(:meta_keywords) : meta_keywords, :name => "keywords"}/
+    = stylesheet_link_tag "application-main"
+    = stylesheet_link_tag "application-print", :media => "print"
+    = javascript_include_tag "application"
+    %script{:src => "http://use.typekit.com/ggg8xcc.js", :type => "text/javascript"}
+    :javascript
+      try{Typekit.load();}catch(e){}    = render "layouts/favicons"
+    = render 'shared/browser_fixes'
+    = yield :head
+    = csrf_meta_tags
+  %body{:class => "#{controller_name} #{action_name}"}
+    #main{:role => "main"}
+
+
+
+      / Main Container
+      #container.container
+        #header
+          = link_to "Venue Dog", '/', :class=>"logo"
+          
+  
+        / Main #content and #sidebar
+        = yield
+        = clear
+      / end #container
+      = clear
+      / #footer
+      = render 'shared/footer_landing_page'
+  
+  
+      / Tracking Codes
+      = render 'shared/tracking_codes'
+      - if content_for?(:footer_js)
+        / Output registered JS for footer
+        :javascript
+          #{yield :footer_js}
+  
+      = content_for?(:page_wrap_ad) ?  yield(:page_wrap_ad) : ""

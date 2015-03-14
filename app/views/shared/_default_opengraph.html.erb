@@ -1,0 +1,13 @@
+<% content_for :head do %>
+
+<meta property="og:title" content="<%= current_page_title %>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<%="http://#{request.host+request.fullpath}" %>" />
+<meta property="og:image" content="http://www.venuedog.com<%= image_path("app-dog.jpg")  %>" />
+<meta property="og:site_name" content="Venue Dog" />
+<meta property="fb:app_id" content="296478800397149" />
+<meta property="og:description"
+      content="<%= !(defined? og_description).blank? ? og_description : "Events, Venues, Calendars, and what to do in Rome, GA" %>"/>
+
+<% end %>
+

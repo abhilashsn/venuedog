@@ -1,0 +1,8 @@
+/* Fixes for IE 7 */
+
+.orange_gradient{
+  background:none;
+  background-color: #e65a3e !important;
+}
+
+#sidebar .search form input#search{width:140px;}

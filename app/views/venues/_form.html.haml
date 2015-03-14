@@ -1,0 +1,151 @@
+= form_for @venue, :url => ( @venue.id.blank? ? create_venue_path( @city ) : update_venue_path( @city, @venue ) ), :html => { :multipart => true } do |f|
+
+  / Validation messages
+  - if @venue.errors.any?
+    .alert.alert-error
+      %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+      %h4.alert-heading
+        = pluralize(@venue.errors.count, "error")
+        prohibited this event from being saved:
+      %ul
+        - @venue.errors.full_messages.each do |msg|
+          %li
+            %em= msg
+
+
+  / Success Message
+  - if !notice.blank?
+    .alert.alert-success
+      %a.close{"data-dismiss" => "alert"} &times;
+      = notice
+
+
+  / Basic Info
+  .basic
+    .field
+      = f.label :name, "Venue Name"
+      = f.text_field :name, :class=>"full_width", :required=>"required", :maxlength=>"40"
+    .field
+      = f.label :street_address, "Street Address"
+      = f.text_field :street_address, :class=>"full_width", :required=>"required"
+    %ul.unstyled
+      %li.left
+        = f.label :city
+        = f.text_field :city_name, :class=>"span3", :required=>"required"
+      %li.left
+        = f.label :state
+        = f.text_field :state, :required=>"required", :maxlength=>"2"
+      %li.left
+        = f.label :zip, "Zip Code"
+        = f.text_field :zip, :required=>"required"
+      %li.left
+        = f.label :phone
+        = f.text_field :phone, :class=>"span2"
+      = clear_li
+      %li.left
+        = f.label :website, "Web Address URL"
+        = f.url_field :website, :placeholder=>'http://example.com'
+      %li.left
+        = f.label :phone_alt, "Alt. Number"
+        = f.text_field :phone_alt, :class=>"span2"
+      = clear_li
+    = clear
+    .field
+      = f.label :description, "Venue Description"
+      = f.text_area :description, :required=>"required"
+  / End basic
+
+
+  %h3 Hours
+  .left.half_width.hours_fields
+    = f.label :monday, "Mondays"
+    = f.text_field :monday_opensat, :class=>"inline span1"
+    \- #{f.text_field :monday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :monday_closed
+      closed
+    = f.label :tuesday, "Tuesdays"
+    = f.text_field :tuesday_opensat, :class=>"inline span1"
+    \- #{f.text_field :tuesday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :tuesday_closed
+      closed
+    = f.label :wednesday, "Wednesdays"
+    = f.text_field :wednesday_opensat, :class=>"inline span1"
+    \- #{f.text_field :wednesday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :wednesday_closed
+      closed
+    = f.label :thursday, "Thursdays"
+    = f.text_field :thursday_opensat, :class=>"inline span1"
+    \- #{f.text_field :thursday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :thursday_closed
+      closed
+    = clear
+  .right.half_width.hours_fields
+    = f.label :friday, "Fridays"
+    = f.text_field :friday_opensat, :class=>"inline span1"
+    \- #{f.text_field :friday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :friday_closed
+      closed
+    = f.label :saturday, "Saturdays"
+    = f.text_field :saturday_opensat, :class=>"inline span1"
+    \- #{f.text_field :saturday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :saturday_closed
+      closed
+    = f.label :sundays, "Sundays"
+    = f.text_field :sunday_opensat, :class=>"inline span1"
+    \- #{f.text_field :sunday_closesat, :class=>"inline span1"}
+    %span.closed
+      %span= f.check_box :sunday_closed
+      closed
+    = clear
+  = clear
+
+
+  %h3 Add A Social Network Profile
+  %ul.unstyled
+    %li.left.half_width
+      = f.label :facebook, :class=>"dark"
+      = f.url_field :facebook
+    %li.left.half_width
+      = f.label :twitter, :class=>"dark"
+      = f.url_field :twitter
+    %li.left.half_width
+      = f.label :yelp, :class=>"dark"
+      = f.url_field :foursquare
+    %li.left.half_width
+      = f.label :foursquare, :class=>"dark"
+      = f.url_field :foursquare
+    = clear_li
+
+
+  / Staff member contact
+  %h3 Staff Member Contact
+  .staff_contact
+    %ul.unstyled
+      %li.left
+        = f.label :staff_name, "Full Name", :class=>"dark"
+        = f.text_field :staff_name, :class=>"span4"
+      %li.left
+        = f.label :staff_phone, "Phone", :class=>"dark"
+        = f.text_field :staff_phone, :class=>"span2"
+      %li.left
+        = f.label :staff_email, "Email Address", :class=>"dark"
+        = f.text_field :staff_email
+      = clear_li
+
+
+  / End Staff
+  .upload_photos
+    %h3 Upload Photos
+    = image_tag(@venue.image.url(:venue_show_thumb), :class=>"shadow") if @venue.image?
+    = f.file_field :image
+  = clear
+
+  %br/
+  .action
+    = f.submit "Submit for Approval", :class=>"btn btn-orange"

@@ -1,0 +1,52 @@
+<div id="content" class="page login users_edit">
+  <h2>Edit Your Profile<%#= resource_name.to_s.humanize %></h2>
+
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <%= clear %>
+
+
+    <ul>
+      <li class="half_width left">
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
+      </li>
+      <li class="half_width left">
+        <%= f.label :email %><br />
+        <%= f.email_field :email %>
+      </li>
+      <%= clear_li %>
+
+
+      <li class="half_width left">
+        <%= f.label :password, "Change Password" %> <span class="small"><em>(leave blank if you don't want to change it)</em></span><br />
+        <%= f.password_field :password, :value=>"" %>
+      </li>
+      <li class="half_width left">
+        <%= f.label :password_confirmation, "Change Password Confirmation" %><br />
+        <%= f.password_field :password_confirmation %>
+      </li>
+      <%= clear_li %>
+
+      <li class="half_width left">
+        <%= f.label :current_password %> <span class="small"><em>(enter current password to confirm changes)</em></span><br />
+        <%= f.password_field :current_password %>
+      </li>
+      <%= clear_li %>
+    </ul>
+
+
+    <%= f.submit "Update", :class=>"btn btn-orange left" %>
+    <div class="devise_links right">
+      <%= render :partial => "devise/shared/links" %>
+      Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>
+    </div>
+    <%= clear %>
+
+  <% end %>
+
+
+</div>
+
+<%= render "/shared/sidebar" %>

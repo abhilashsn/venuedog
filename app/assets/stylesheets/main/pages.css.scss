@@ -1,0 +1,156 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$grey:#a4a4a4;
+$orange: #E75A3E;
+$font-serif: "museo-slab", Georgia, serif;
+
+
+/* Category and Events table on homepage */
+.homepage .category_table{
+  ul{
+    padding:0;margin:10px 0;
+    list-style:none;
+    width:25%;
+    position:relative;
+    li.title{
+      color:#fff;
+      font-size:18px;
+      padding:10px 0 10px 5px;
+      a{
+        color:#fff;
+        font-family: $font-serif;
+      }
+    }
+    li.event{
+      margin:5px 0 8px 5px;
+      a{font-weight:bold; color:$dark_blue;}
+      span{display:block;font-size:10px;}
+    }
+    li.foot{
+      position:absolute;
+      bottom:0; right:8px;
+      height:20px;
+      a{color:$orange;}
+    }
+  }
+}
+
+
+
+
+
+.category_bar{
+      /*position:absolute; */
+      bottom:0; left:0;
+      margin-left:auto;
+      margin-right:auto;
+      height:41px;
+      width:800px;
+      background:$orange url(asset-path("scaffold/nav-bg.png", image)) 0 0 repeat-x;
+      white-space:nowrap;
+      overflow:hidden;
+      ul{
+        list-style:none;
+        padding:0 0 0 20px;margin:0;
+        height:100%;
+        white-space:nowrap;
+        li{
+          height:100%;
+          float:left;
+          a{
+            color:white;
+            height:28px;
+            padding:12px 12px 0px 12px;
+            display:block;
+            font-size:16px;
+            font-weight:bold;
+            &:hover{text-decoration:underline;}
+          }
+        }
+        color:#fff;
+      }
+
+}
+
+.contact_us{
+  div.contact{
+    width:500px;
+    margin-top:15px;
+  }
+  ul.contact_information{
+    padding:0;margin:15px 0;
+    list-style:none;
+    width:150px;
+    p{
+      font-weight:bold;
+      font-size:18px;
+      line-height:20px;
+      span{
+        font-weight:normal;
+        font-size:14px;
+        line-height:16px;
+        display:block;
+        a{
+          color:$orange;
+          &:hover{text-decoration:underline;}
+        }
+      }
+    }
+
+  }
+
+
+  form{
+    label{
+      padding:2px;
+      font-size:16px;
+    }
+    ul li.half_width{
+      margin:10px 0;
+      input{
+        width:90%;
+      }
+    }
+    textarea{
+      width:95%;
+      height:150px;
+      margin-bottom:8px;
+    }
+  }
+}
+
+.theme-default #slider {
+    margin: 10px auto 0 auto;
+    width:670px; /* Make sure your images are the same size */
+    height:285px; /* Make sure your images are the same size */
+}
+
+
+
+/* Error and 404 page style */
+.error404{
+  .dashboard{
+    margin: 40px 0 20px 0;
+    .links{
+      width: 600px;
+      margin: 10px auto 10px auto;
+      a{
+        margin:5px 15px 5px 0;
+        font-size:18px;  
+        padding-bottom:10px;
+      }
+    }
+  }  
+}
+
+
+
+
+
+.search{ h2{margin-top:15px }}
+#sidebar .search{ h2{margin-top:0px }}

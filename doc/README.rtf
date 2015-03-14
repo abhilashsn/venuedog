@@ -1,0 +1,115 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \qc \f0 \sa180 \li0 \fi0 \b \fs36 Venuedog Developer\u8217's Guide\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  Sean Brewer (sean@saidigital.co)\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Notice\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The documentation in the repository must {\i always} be the most up-to-date documentation available. Compiling the documentation and copying it over to Google Docs is fine, but any changes made to the documentation must happen in the repository {\b first}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Repository\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The Venuedog repository is currently kept in git. The repository URL is: {\f1 gitosis@saidev.co:venuedog.git}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Checkout Procedure\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Checking Out The Repository\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 To checkout the repository, open up a terminal and run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 git clone gitosis@saidev.co:venuedog}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you are not able to clone the repo, repository access control is probably not setup for you. See the Access Control section for more details.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Updating\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you know of changes that have been made that have been committed, you need to pull the updates from the repository. To do this, run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 git pull}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Committing Changes\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 After you make changes to the source, the following procedure will push the changes to the repository:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab From a terminal, to add newly created files, run, preferably from the root directory of the project: {\f1 git add .}\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab To commit the changes, preferably from the root directory, run: {\f1 git commit -a -m "My commit message here"}\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab To push the commit to the repository server run: {\f1 git push}\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 However, you must first have write access to the repository, or you will not be allowed to check out the project. See the Access Control section for more details.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Access Control\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It is possible that new members will need to be added or members removed from write access in Venuedog. Assuming you have write access to the gitosis configuration, you can change write access for a team member.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Removing Write Access From A Team Member\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab From a terminal run {\f1 git clone gitosis@saidev.co:gitosis-admin.git} if you have not already cloned the repository.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 2.\tx360\tab {\f1 cd} into {\f1 gitosis-admin} and open up {\f1 gitosis.conf} with your favorite text editor. The configuration file should look something like this:\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 [gitosis]\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 [group team]\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 writable = venuedog\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 members = sean richard engineyard\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 [group gitosis-admin]\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 members = sean richard\par}
+{\pard \ql \f0 \sa180 \li360 \fi0 writable = gitosis-admin\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab To remove members from {\f1 [group team]}, remove the specific team member\u8217's keyfile name from the members variable. The names listed in the variable are derived from the keyfile names in the {\f1 keyfiles} folder. According to this configuration, we have {\f1 sean.pub}, {\f1 richard.pub}, and {\f1 engineyard.pub} public keys folder. So, if we wanted to remove the write access from {\f1 sean} we would remove the {\f1 sean} entry in the {\f1 [group team]} section.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab After you\u8217're finished editing, run {\f1 git add .}, preferably from the root directory.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab Run {\f1 git commit -a -m "I removed PERSON_HERE's write access to Venuedog."}\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 6.\tx360\tab Run {\f1 git push} .\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Adding Write Access For A Team Member\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab From a terminal run {\f1 git clone gitosis@saidev.co:gitosis-admin.git} if you have not already cloned the repository.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab If the team member does not already have a public key, have them generate one on their machine with this command: {\f1 ssh-keygen -t rsa -C "your_email@youremail.com"}. Follow the instructions, and your public key is probably stored in {\f1 ~/.ssh/id_rsa.pub}\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab You will need to {\f1 cd} into gitosis-admin and put the keyfile into the {\f1 keyfiles} folder. The key contained in {\f1 id_rsa.pub} should go in a file named {\f1 thepersonsname.pub} in the {\f1 keyfiles} folder. Make arrangements to do this.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab At this point, you should have a new key named {\f1 thepersonsname.pub}. {\f1 cd} back into {\f1 gitosis-admin} and open up {\f1 gitosis.conf} with your favorite text editor. The configuration file should look something like this:\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 [gitosis]\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 [group team]\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 writable = venuedog\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 members = sean richard engineyard\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 [group gitosis-admin]\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 members = sean richard\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 writable = gitosis-admin\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab To add the member to {\f1 [group team]}, add the specific team member\u8217's keyfile name from the members variable. The names listed in the variable are derived from the keyfile names in the {\f1 keyfiles} folder. According to this configuration, we have {\f1 sean.pub}, {\f1 richard.pub}, and {\f1 engineyard.pub} public keys folder. So, if we wanted to add write access to {\f1 thenewguy} we would add the {\f1 thenewguy} entry in the {\f1 [group team]} section.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 6.\tx360\tab After you\u8217're finished editing, run {\f1 git add .}, preferably from the root directory.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 7.\tx360\tab Run {\f1 git commit -a -m "I added write access for PERSON_HERE to Venuedog."}\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 8.\tx360\tab Run {\f1 git push} .\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Development Environment\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The Venuedog application was created using Ruby on Rails 3.1. As of this writing, Ruby on Rails 3.1 is about a month old. Our reasoning for using such a new release is that the Ruby on Rails platform changes rapidly, and the newer the release we could use, the less headache it would be for the customer to find developers that have experience with it.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Setting Up\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Setting up the development environment after you have cloned the repository is not difficult if you are using a UNIX or UNIX-like operating system. Linux or Mac OS X are ideal. Any of the BSDs should be fine. If you\u8217're trying to setup your development environment in Windows, good luck with that.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Installing RVM\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you already have RVM installed, then you can skip to the next section.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Installing RVM is fairly straightforward. You need Git and curl installed for the installation to work.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 To install RVM, open up a terminal and enter the following command:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 After installation, RVM will give you some tips on the libraries it needs to build Ruby. For Ubuntu users, running this:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 should get you going.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Setting Up The Environment\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 After RVM has been installed successfully, {\f1 cd} into the cloned repository. When you get into the directory, RVM will ask you if you want to trust the project rvmrc. You want to, so choose {\f1 y[es]}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Once you accept the project .rvmrc, you can begin the setup process.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Now, you need to install bundler. There is a strange bug in bundler 1.0.20 that won\u8217't allow the installation of one of the gems. If this is fixed in a newer release, it is highly recommended that you upgrade. To install the latest release of bundler without the bug run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 gem install bundler -v '1.0.18'}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If this completed successfully run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 bundle install}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If everything was successful, the setup of your environment is almost complete. If something went wrong, it is possible that you might not have some of the development libraries to install the gems. The most common missing library is libmysqlclient-dev. To install it in Ubuntu run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 sudo apt-get install libmysqlclient-dev}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Then run {\f1 bundle install} again.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Installing The Engine Yard CLI\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Since we\u8217're deploying the application to Engine Yard, the Engine Yard command line application will be really useful. To install it, make sure you\u8217're in the repository directory and run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 gem install engineyard}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The application should install quickly. To see instructions for the Engine Yard application run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 ey help}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Before you use the Engine Yard application, you must add your RSA public keys to your Engine Yard instance. Please see the Hosting chapter for more details.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs36 Hosting\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 We are using Engine Yard, which is one of the two largest Ruby-oriented Platforms as a Service. Engine Yard is located at http://www.engineyard.com.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Setting Up\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 One of the first steps, putting the Engine Yard public key into your Gitosis keys and configuration is already done for you if you need to change that I will add some documentation for that later.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Adding Your Public Key To Engine Yard\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 You will need to add your public key to Engine Yard so that you may deploy, run updates, etc.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab Login to Engine Yard.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab On the navigation bar on the left-hand side of the page, you will see \u8220"SSH Public Keys.\u8221" Click \u8220"SSH Public Keys.\u8221"\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab You should now see \u8220"SSH Public Keys\u8221" header on the center-left of the page. To the right of that, there is a \u8220"Add a new SSH public key\u8221" button. Click the \u8220"Add a new SSH public key\u8221" button.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab Here, you will see a \u8220"Name\u8221" textbox and a \u8220"Public Key\u8221" textbox. Give your key a name in the \u8220"Name\u8221" textbox. Your RSA public key (that is probably stored in {\f1 ~/.ssh/id_rsa.pub}) will go in the \u8220"Public Key\u8221" textbox. After all of that information is entered, click \u8220"Add Key.\u8221"\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab Your public key is now saved, and at this point, you should be allowed to run deployments and other updates through Engine Yard.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Deployment\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 After your public key has been given to Engine Yard, you may now run deployments.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 First Steps\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In general, it is probably a good idea to re-compile all of your assets before you deploy. To do this, run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 rake assets:precompile}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Then, from the root directory of the project, commit your changes:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 git add .}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 git commit -a -m "Your notes go here."}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 git push}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Deployment Methods\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The easiest way to deploy is to use the Engine Yard gem and run:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 ey deploy}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 from the project directory.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs28 Migrations\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you need the deployment to run a migration do:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 ey deploy -m}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The {\f1 -m} argument will run {\f1 rake db:migrate} by default. You can also tell it specifically what kind of migration you want to run. For instance, if you want to rollback a migration you would do:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 ey deploy -m rake db:rollback}\par}
+}

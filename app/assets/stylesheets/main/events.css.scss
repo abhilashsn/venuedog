@@ -1,0 +1,375 @@
+// Place all the styles related to the Events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$orange: #E75A3E;
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$grey:#a4a4a4;
+$font-sans:"Droid Sans", arial, helvetica, sans-serif;
+$font-serif: "museo-slab", Georgia, serif;
+@mixin p_reset { padding:0;margin:0; }
+
+
+/* New and Edit Event on Frontend Style */
+.event_new{
+
+  h1{margin:10px 0 20px 0}
+  label{font-size:18px;}
+  .basic{
+    width:550px;
+    padding-right:10px;
+    #event_name{width:540px;margin-bottom:10px;}
+    .date{width:320px;}
+    .time{width:180px; float:right;}
+  }
+  .manage_photo{width:350px;}
+  img.edit_preview_event{
+    max-width:345px; max-height:300px;
+  }
+  .location{
+    width:700px;
+    margin-bottom:20px;
+    .venue{ width:275px; }
+  }
+
+  div.tags{
+   width:220px;
+   margin-top:10px;
+   .head{
+
+     span{display:block; color:$grey;}
+   }
+   ul{
+     list-style:none;
+     @include p_reset;
+     li{
+       font-size:12px;
+     }
+   }
+  }
+
+  .location{
+    .ui-autocomplete-input{width:220px}
+    em{color:$highlight_blue;}
+    select{width:270px;}
+    #event_venue_id_chzn em{color:$orange; }
+  }
+
+
+  .vertical_divider{
+    width:30px;
+    height:130px;
+    text-align:center;
+    margin:0;padding:0;
+    font-style:italic;
+    font-size:15px;
+
+    span.bar{
+      display:block;
+      height:40%;
+      background:transparent url(asset-path("events/e9e9e9.png", image)) 50% 0 repeat-y;
+    }
+  }
+  .create_location{
+    margin-right:10px;
+    input{margin-bottom:10px;}
+    width:375px;
+
+    .city{width:165px;margin-right:10px;}
+    .state{width:42px;margin-right:10px;}
+    .zip{width:100px;float:right;}
+    #event_venue_attributes_name,#event_venue_attributes_street_address{ width:364px;}
+    #event_venue_attributes_city{width:165px;margin-right:10px;}
+    #event_venue_attributes_state{width:42px;margin-right:10px;}
+    #event_venue_attributes_zip{width:100px;float:right;}
+  }
+
+  .description{
+    width:700px;
+    textarea{
+      width:690px;
+      height:160px;
+
+    }
+    .half{
+      width:340px;
+
+
+      .full_width{
+        width: 320px;
+        margin-bottom:25px;
+      }
+    }
+  }
+  form{
+    #event_name{width:100%;}
+    margin-bottom:50px;
+    ul{
+      .half_width{
+        input{width:92%;}
+        margin:10px 0;
+      }
+    }
+  }
+
+
+  div.categories{
+    ul{
+      li ul.children{margin-left:35px;display:none;}
+    }
+  }
+
+  #new_venue_info{
+    form{margin-bottom:10px;}
+    p.callout{
+      color:$highlight_blue;
+      padding:0 5px 0 5px;
+      font-style:italic;
+    }
+    label{font-size:14px; margin-bottom:0;}
+    #venue_name{width:510px;}
+    #venue_street_address{margin-right:5px;}
+    #venue_city{width:90px; margin-right:5px;}
+    #venue_state{width:50px; margin-right:5px;}
+    #venue_zip{width:80px;}
+    #venue_description{height:60px;width:510px;}
+    p.oneline{
+
+      label{
+        width:120px;
+        display:block;
+        float:left;
+        padding-top:5px;
+      }
+    }
+  }
+
+}
+
+
+#new_venue_success{
+  p.callout{
+    color:$highlight_blue;
+    padding:0 5px 0 5px;
+    font-style:italic;
+  }
+}
+
+
+/* Individual Event */
+.event_show{
+
+  p.categories_list{
+    margin:0;padding:0;
+    font-size:12px;
+    a{color:$orange;font-weight:bold;}
+  }
+
+  .description{
+    margin-top:10px;
+    margin-bottom:20px;
+    ul{
+      padding:0;margin:0;
+      list-style:none;
+      li{
+        padding:8px 5px;
+
+        div.label{
+          width:80px;
+          height:100%;
+          float:left;
+        }
+
+        p{
+          padding:0 0 0 80px;
+          margin:0;
+          width:240px;
+          width:200px;
+        }
+        span{
+          float:left;
+          margin-left:-80px;
+        }
+        a{
+          color:$orange;
+          font-weight:bold;
+        }
+      }
+
+    }
+    .event_description{
+      margin-top:20px;
+    }
+
+
+
+  }
+  .facebook_attendees{margin-bottom:15px; }
+
+  .location{
+    margin-bottom:25px;
+    .share ul{
+      padding:10px;
+      margin:5px 0 0 0;
+      list-style:none;
+      color:black;
+      font-size:20px;
+      width:60px;
+      li{
+        text-align:center;
+        margin-bottom:20px;
+        p{padding-left:14px;}
+        a{
+          font-size:14px;
+          text-indent:-9999px;
+          display:block;
+          width:32px; height:32px;
+        }
+        .email{background:transparent url(asset-path("icons/share-email.png", image)) 0 0 no-repeat;}
+        .facebook{background:transparent url(asset-path("icons/share-facebook.png", image)) 0 0 no-repeat;}
+        .twitter{background:transparent url(asset-path("icons/share-twitter.png", image)) 0 0 no-repeat;}
+        .add{background:transparent url(asset-path("icons/share-ical.png", image)) 0 0 no-repeat;}
+        .print{background:transparent url(asset-path("icons/share-print.png", image)) 0 0 no-repeat;}
+      }
+    }
+  }
+
+
+  .community_events{
+    margin-bottom:40px;
+    .event{
+      width:100px;
+      padding:0 10px;
+      p{
+        margin:5px 0 0 0;padding:0;
+        font-size:12px;font-weight:bold;
+        a{color:$dark_blue;line-height:13px;}
+        span{
+          display:block;font-weight:normal;
+          font-size:10px;font-style:italic;
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
+}/* end event#show */
+
+
+
+
+.event_index{
+
+  #date_paginate {
+
+    text-align:center;
+
+  }
+  #date_paginate ul
+  {
+    padding-left: 0;
+    margin-left: 0;
+    float: left;
+    width: 100%;
+  }
+
+  #date_paginate ul li { display: inline; }
+
+  #date_paginate ul li a{
+   padding: 0.2em 1em;
+   color: $dark_blue;
+   text-decoration: none;
+   &:hover{ color:$orange;text-decoration:underline;}
+  }
+
+  .date{
+    border-bottom:2px $dark_blue dotted;
+    margin-bottom:30px;
+    ul{
+      list-style:circle;
+      padding:0;
+      li{
+        list-style:disc inside;
+        float:left;
+        width:48%;
+        padding-left:5px;
+        p{
+          font-size:16px;
+          padding:0;margin:5px 0;
+          a{
+            color:$dark_blue;
+          }
+        }
+      }
+
+
+    }
+
+
+  }
+
+
+}
+
+
+
+.event{
+  /* combobox widget */
+  .ui-button { margin-left: -1px; }
+  .ui-button-icon-only .ui-button-text { padding: 0.35em; }
+  .ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; height:17px;}
+}
+
+
+
+
+/* Event Creation Success Page */
+.events_success{
+  .disclaimer{
+
+    margin-top:100px;
+
+  }
+  h2{
+    text-align:center;
+  }
+    h1{
+    font-family:$font-sans;
+    text-align:center;
+    font-size:48px;
+    margin:30px 0 0px 0;
+    font-weight:bold;
+  }
+  p.highlight_blue{
+    font-size:16px;
+    margin:20px 0;
+  }
+  .links{
+    width:650px;
+    margin:auto auto 30px auto;
+    a{color:$orange;
+      font-size:18px;
+      width: auto;
+    }
+
+  }
+}
+
+
+
+/* Ads */
+#show_by_date_ad {
+
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 450px
+
+}

@@ -1,0 +1,9 @@
+/* Change Event button to reflect changed state */
+jQuery(document).ready(function(){
+  jQuery(".calendar_actions form#new_calendar_event").hide();
+  jQuery("div.calendar_actions").html('<img src="/assets/calendars/in-calendar.png" class="in_calendar right" />');
+});
+
+
+/* Modal box for Event Addition Notification */
+$('#added_to_calendar').modal('toggle');

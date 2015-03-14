@@ -1,0 +1,12 @@
+%ul.secondary_nav
+
+  - if !@city.blank?
+    %li= link_to 'Add an Event', new_event_path(@city)
+    %li= link_to 'Add a Venue', new_venue_path(@city)
+
+  - if user_signed_in?
+    %li= link_to 'My Calendar', '/profile/my-calendar'
+    %li= link_to 'My Profile', '/profile'
+    %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
+  - else
+    %li= link_to 'Sign In', new_user_session_path

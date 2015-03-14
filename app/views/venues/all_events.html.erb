@@ -1,0 +1,46 @@
+<div id="content" class="page venue venue_show venue_all_events">
+
+  <%= render "/shared/breadcrumbs" %>
+
+
+  <h1>Events by Venue</h2>
+
+  <!-- Venue Switcher -->
+  <div class="alert alert-info change_venue">
+    <%= form_tag "" do %>
+      <p class="align_right">
+        Change Venue <%= select("venue", "id", @city.venues.real_venues_ordered.map{ |v| [v.name, v.slug] },{}, :data => {:city => @city.slug } ) %>
+      </p>
+    <% end %>
+  </div>
+
+
+
+  <!-- Events -->
+  <div class="events">
+
+    <% @events.each do |e| %>
+      <div class="event">
+        <%= link_to image_tag( e.image? ? e.image.url(:category_event_thumb) : default_image(e.categories,"70x70"), :class=>"left"), event_path( e.city, e) %>
+        <div class="details">
+          <p class="title"><%= link_to e.name, event_path(e.city, e) %></p>
+          <p class="when"><%= event_time_and_venue(e) %></p>
+          <p class="categories">Category: <%= truncate(listify_categories(e.categories), :length=>50) %></p>
+        </div>
+      </div>
+      <%= clear %>
+    <% end %>
+    <%= clear %>
+  </div>
+
+
+  <%= paginate @events %>
+
+</div>
+
+<%= render "/shared/sidebar" %>
+
+
+<% content_for :page_title, "All Upcoming Events for " + @venue.name %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "All Upcoming Events for #{@venue.name}" } %>

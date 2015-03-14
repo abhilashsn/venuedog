@@ -1,0 +1,31 @@
+<%#= form_for :venue, :remote => true, :html => { :multipart => true, :class=>"suggest_venue" } do |f| %>
+<%= form_for :venue, :remote=>true, :html => {:action => new_venue_path, :class=>"new_venue suggest_venue"} do |f| %>
+<%#= form_for @venue, :remote=>true, :html => {:action => new_venue_path, :class=>"new_venue suggest_venue"} do |f| %>
+  <fieldset>
+
+    <p class="callout">If this location is a facility that regularly hosts public events, it might qualify as an official venue. Let us know by filling in any additional information you have.</p>
+
+    <%= f.label :street_address, "Venue Location" %> 
+    <p>
+      <%= f.text_field :name, :placeholder=>"Venue Name", :required=>"required" %><br />
+      <%= f.text_field :street_address, :placeholder=>"Street Address..." %>
+      <%= f.text_field :city_name, :placeholder=>"City...", :size=>"4", :id=>"venue_city" %> 
+      <%= f.text_field :state, :placeholder=>"St.", :maxlength=>"2" %>
+      <%= f.text_field :zip, :placeholder=>"ZIP Code...", :size=>"8" %>
+    </p>
+
+    <%= f.label :description, "Venue Description" %>
+    <%= f.text_area :description %>
+
+    <%= f.text_field :phone, :class=>"left", :placeholder=>"Phone number..." %>
+    <%= f.url_field :website, :class=>"right", :placeholder=>"Website URL..."  %>
+    <%= clear %>
+    <%= f.url_field :facebook, :class=>"left", :placeholder=>"Facebook page URL..."  %>
+    <%= f.url_field :twitter, :class=>"right", :placeholder=>"Twitter URL..."  %>
+    <%= clear %>
+    <%= f.label :file_field, "Upload Image",:class=>"inline" %> <%= f.file_field :image, :class=>"left" %>
+
+
+
+  </fieldset>
+<% end %>

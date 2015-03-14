@@ -1,0 +1,67 @@
+$orange: #E75A3E;
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$grey:#a4a4a4;
+
+$page-width:960px;
+
+$main-horizontal-padding:15px;
+$main-vertical-padding:15px;
+$footer-wrap-width: 1016px;
+$footer-wrap-height: 80px;
+$z-top:100;
+$z-mid:50;
+$z-bot:0;
+
+$font-sans:"Droid Sans", arial, helvetica, sans-serif;
+$font-serif: "museo-slab", Georgia, serif;
+
+
+
+/* Styles for Calendar Views including sidebar and ads */
+#container{
+
+  .users_calendar, .users_events{
+    h2{ font-weight:normal; }
+    #tabs{
+      .ui-tabs-panel{
+        padding: 1em .7em;
+      }
+      .upcoming{
+        .actions{
+          text-align:right;
+          white-space:nowrap;
+        }
+
+      }
+
+    }
+
+
+
+
+  }
+
+
+  /* Calendar action buttons */
+  .calendar_actions{
+    form{
+      input[type="image"]{
+        border:none;  
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      
+    }  
+    
+  }
+
+}

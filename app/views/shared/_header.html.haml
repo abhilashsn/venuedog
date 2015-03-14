@@ -1,0 +1,14 @@
+#header
+ 
+  - if @city.blank?
+    = link_to( "Venue Dog", '/', :class=>"logo" )
+  - else
+    = link_to( "Venue Dog", city_path(@city), :class=>"logo" )
+
+  = render '/shared/secondary_nav'
+  = render '/ad_spaces/header'
+  = render '/shared/location'
+
+  / Primary Navigation
+  = render '/shared/primary_nav'
+  = clear    

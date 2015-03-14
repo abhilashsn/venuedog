@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+
+    <p>New contact from contact form.</p>
+
+
+    <p>From: <%= @contact_info[:name] %></p>
+    <p>Email: <%= @contact_info[:email] %></p>
+    <% if !@contact_info[:phone].blank? %>
+      <p>Phone: <%= @contact_info[:phone] %></p>
+    <% end %>
+    <p>Subject: <%= @contact_info[:subject] %></p>
+    <p>Message: <%= @contact_info[:message] %></p>
+    <hr />
+
+    <p>Sent from the contact form on http://www.venuedog.com/pages/contact-us<br />The VenueDog Team</p>
+  </body>
+</html>

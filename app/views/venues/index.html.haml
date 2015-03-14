@@ -1,0 +1,37 @@
+#content.page.venue.venue_index
+  = render "/shared/breadcrumbs"
+
+  %h1 Events by Venue
+
+  #filter_by_category
+    %ul.unstyled
+      %li#filter_by
+        %span Filter by Category
+      - VenueCategory.roots.each do |c|
+        %li
+          = link_to( image_tag("venuecategories/icon-venue-#{sanitize_name(c.name).sub('/','_')}.png", :title => c.name, :alt => c.name), venues_path(@city, :venue_category => c.id.to_s))
+    = clear
+
+
+  %ul.wrap |venue, i|
+                %li.left.half_width
+    - @venues.each_with_index do
+        %h3= link_to venue.name, venue_path(@city, venue)
+        = link_to image_tag( venue.image? ? venue.image.url(:index) : "http://placehold.it/320x200", :class=>"shadow"), venue_path(@city, venue)
+        - venue.events.upcoming.approved.limit(3).each do |e|
+          %p
+            = link_to e.name + ',', event_path(e.city, e)
+            %span= e.start_time.strftime('%B %e')
+          - if e == venue.events.upcoming.approved.last
+            %p.view_all= link_to "View all events at " + venue.name, venue_path(@city, venue)
+      = clear_li if (i+1).even?
+  = clear
+
+
+  = paginate @venues
+
+
+= render "/shared/sidebar"
+
+- content_for :page_title, "Venues in your area"
+= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Venues in your area" }

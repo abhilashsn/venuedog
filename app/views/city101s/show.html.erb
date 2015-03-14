@@ -1,0 +1,269 @@
+<% content_for :head do %>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+<script type="text/javascript">
+  var wifi_places = <%= @city101.city.wifi_hotspots.to_json.html_safe %>;
+  var current_citystate = "<%= @city101.city.full_address %>";
+  var map, places, iw;
+  var markers = [];
+  var autocomplete;
+
+  function initialize() {
+    var myLatlng = new google.maps.LatLng(<%= @city101.city.latitude %>, <%= @city101.city.longitude %> );
+    var myOptions = {
+      zoom: 12,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas_city101"), myOptions);
+    places = new google.maps.places.PlacesService(map);
+    google.maps.event.addListener(map, 'tilesloaded', tilesLoaded);
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete_city101'));
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      showSelectedPlace();
+    });
+  }
+
+  function tilesLoaded() {
+    google.maps.event.clearListeners(map, 'tilesloaded');
+    google.maps.event.addListener(map, 'zoom_changed', search);
+    google.maps.event.addListener(map, 'dragend', search);
+    search();
+  }
+
+  function showSelectedPlace() {
+    clearResults();
+    clearMarkers();
+    var place = autocomplete.getPlace();
+    map.panTo(place.geometry.location);
+    markers[0] = new google.maps.Marker({
+      position: place.geometry.location,
+      map: map
+    });
+    iw = new google.maps.InfoWindow({
+      content: getIWContent(place)
+    });
+    iw.open(map, markers[0]);
+  }
+
+  function search() {
+    var type;
+    for (var i = 0; i < document.controls.type.length; i++) {
+      if (document.controls.type[i].checked) {
+        type = document.controls.type[i].value;
+      }
+    }
+
+    autocomplete.setBounds(map.getBounds());
+
+    var search = {
+      bounds: map.getBounds()
+    };
+
+    if (type != 'establishment') {
+      search.types = [ type ];
+    }
+
+    places.search(search, function(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        clearResults();
+        clearMarkers();
+        for (var i = 0; i < results.length; i++) {
+          markers[i] = new google.maps.Marker({
+            position: results[i].geometry.location,
+            animation: google.maps.Animation.DROP
+          });
+          google.maps.event.addListener(markers[i], 'click', getDetails(results[i], i));
+          setTimeout(dropMarker(i), i * 100);
+          addResult(results[i], i);
+        }
+      }
+    })
+  }
+
+  function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+      if (markers[i]) {
+        markers[i].setMap(null);
+        markers[i] == null;
+      }
+    }
+  }
+
+  function dropMarker(i) {
+    return function() {
+      markers[i].setMap(map);
+    }
+  }
+
+  function addResult(result, i) {
+    var results = document.getElementById("results_city101");
+    var tr = document.createElement('tr');
+    tr.style.backgroundColor = (i% 2 == 0 ? '#F0F0F0' : '#FFFFFF');
+    tr.onclick = function() {
+      google.maps.event.trigger(markers[i], 'click');
+    };
+
+    var iconTd = document.createElement('td');
+    var nameTd = document.createElement('td');
+    var icon = document.createElement('img');
+    icon.src = result.icon;
+    icon.setAttribute("class", "placeIcon_city101");
+    var name = document.createTextNode(result.name);
+    iconTd.appendChild(icon);
+    nameTd.appendChild(name);
+    tr.appendChild(iconTd);
+    tr.appendChild(nameTd);
+    results.appendChild(tr);
+  }
+
+  function clearResults() {
+    var results = document.getElementById("results_city101");
+    while (results.childNodes[0]) {
+      results.removeChild(results.childNodes[0]);
+    }
+  }
+
+  function getDetails(result, i) {
+    return function() {
+      places.getDetails({
+          reference: result.reference
+      }, showInfoWindow(i));
+    }
+  }
+
+  function showInfoWindow(i) {
+    return function(place, status) {
+      if (iw) {
+        iw.close();
+        iw = null;
+      }
+
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        iw = new google.maps.InfoWindow({
+          content: getIWContent(place)
+        });
+        iw.open(map, markers[i]);
+      }
+    }
+  }
+
+  function getIWContent(place) {
+    var content = "";
+    content += '<table><tr><td>';
+    content += '<img class="placeIcon_city101" src="' + place.icon + '"/></td>';
+    content += '<td><b><a href="' + place.url + '">' + place.name + '</a></b>';
+    content += '</td></tr></table>';
+    return content;
+  }
+
+  function showWifi() {
+        clearResults();
+        clearMarkers();
+        for (var i = 0; i < wifi_places.length; i++) {
+          markers[i] = new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng(wifi_places[i].latitude,  wifi_places[i].longitude),
+            animation: google.maps.Animation.DROP
+          });
+
+          google.maps.event.addListener(markers[i], 'click', getWifiDetails(wifi_places[i], i));
+          //setTimeout(dropMarker(i), i * 100);
+          addWifiResult(wifi_places[i], i);
+        }
+  }
+
+
+  function addWifiResult(result, i) {
+    var results = document.getElementById("results_city101");
+    var tr = document.createElement('tr');
+    tr.style.backgroundColor = (i% 2 == 0 ? '#F0F0F0' : '#FFFFFF');
+    tr.onclick = function() {
+      google.maps.event.trigger(markers[i], 'click');
+    };
+
+    var iconTd = document.createElement('td');
+    var nameTd = document.createElement('td');
+    var icon = document.createElement('img');
+    icon.src = "http://www.venuedog.com/favicon.ico";
+    icon.setAttribute("class", "placeIcon_city101");
+    var name = document.createTextNode(result.name);
+    iconTd.appendChild(icon);
+    nameTd.appendChild(name);
+    tr.appendChild(iconTd);
+    tr.appendChild(nameTd);
+    results.appendChild(tr);
+  }
+
+  function getWifiIWContent(place) {
+    var full_address = escape(place.address + " " + current_citystate);
+    var google_url = "http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=" + full_address + "&amp;aq=0&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=" + full_address + "&amp;t=m&amp;z=14";
+    var content = "";
+    content += '<table><tr><td>';
+    content += '<img class="placeIcon_city101" src="' + "http://www.venuedog.com/favicon.ico" + '"/></td>';
+    content += '<td><b><a href="' + google_url + '">' + place.name + '</a></b>';
+    content += '</td></tr></table>';
+    return content;
+  }
+
+  function getWifiDetails(result,i){
+
+    return function() {
+      if (iw) {
+        iw.close();
+        iw = null;
+      }
+
+    iw = new google.maps.InfoWindow({ content: getWifiIWContent(result) });
+    iw.open(map,markers[i]);
+    }
+  }
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+</script>
+<% end %>
+
+<div id="content_full" class="city101">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <div class="city-description">
+  <h1><%= @city101.city.name %> 101</h1>
+  <%= render "/ad_spaces/city101_description" %>
+  <p><%=  @city101.description.html_safe unless @city101.description.html_safe.blank? %></p>
+</div>
+  <div class="city-google">
+    <%#= render "/ad_spaces/city101_google" %>
+    <h2>Restaurants &amp; Lodging</h2>
+    <div id="places_city101">
+<div id="locationField_city101">
+    <input id="autocomplete_city101" type="text" />
+  </div>
+  <div id="controls_city101">
+    <form name="controls">
+    <input type="radio" name="type" value="establishment" onclick="search()" checked="checked"/>All (No Wi-Fi)<br/>
+    <input type="radio" name="type" value="restaurant" onclick="search()" />Restaurants<br/>
+    <input type="radio" name="type" value="lodging" onclick="search()" />Lodging<br/>
+    <input type="radio" name="type" value="wifi" onclick="showWifi()" />Free Wi-Fi
+    </form>
+  </div>
+  <div id="map_canvas_city101"></div>
+  <div id="listing_city101"><table id="results_city101"></table></div>
+  </div>
+</div>
+  <div class="city-links">
+    <div class="city-links-content">
+      <p><%=  @city101.links.html_safe unless @city101.links.blank? %></p>
+    </div>
+  <%= render "/ad_spaces/city101_links_googleads" %>
+</div>
+</div>
+
+
+
+
+
+<% content_for :page_title, "City 101: #{@city101.city.name}" %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "City 101: #{@city101.city.name}", :og_description => "A quick guide to Rome, GA for lodging, restaurants, and local resources"} %>

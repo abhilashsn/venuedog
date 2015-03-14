@@ -1,0 +1,342 @@
+$orange: #E75A3E;
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$font-sans:"Droid Sans", arial, helvetica, sans-serif;
+$font-serif: "museo-slab", Georgia, serif;
+@mixin t { border: 1px black solid }
+@mixin p_reset { padding:0;margin:0; }
+
+
+/*  Sidebar Widgets
+--------------------------------------------------------------------------*/
+#sidebar{
+
+
+  /* Search Widget */
+  .search{
+    font-family:$font_sans;
+    padding-bottom:5px;
+    margin-bottom:10px;
+    p{
+      @include p_reset;
+      font-size:14px;
+    }
+    a{
+      color:white;
+      font-family:$font_sans;
+      font-size:12px;
+      font-weight:bold;
+    }
+    .location{font-size:16px;}
+    form{
+      margin-bottom:15px;
+      input#search{width:155px;}
+    }
+  }
+
+
+
+
+
+
+
+  /* Browse By Widget */
+  .browse_by{
+    margin-bottom:15px;
+
+    a.ui-state-highlight{ border:1px solid #0f3757;}
+
+
+    .head{
+      @include p_reset;
+      font-family:$font-serif;
+      font-size:18px;
+      margin-bottom:5px;
+
+      white-space:nowrap;
+
+      background-color:$dark_blue;
+      a{
+        white-space:nowrap;
+        display:block;
+        color:#fff;
+        padding:10px 0 10px 45px;
+        position:relative;
+        span{
+          float:right;
+          padding-right:5px;
+          width:14px;
+          height:13px;
+          position:absolute;
+          top:10px;
+          right:5px;
+        }
+        span.plus{background:transparent url(asset-path("buttons/plus-minus.png", image)) 0 0 no-repeat;}
+        span.minus{background:transparent url(asset-path("buttons/plus-minus.png", image)) 0 -13px no-repeat;}
+      }
+    }
+    div.date .head{
+      margin-bottom:5px;
+      a{
+        background:transparent url(asset-path("icons/browse-date.png",image)) 11px 6px no-repeat;
+      }
+    }
+    div.event .head a{background:transparent url(asset-path("icons/browse-event.png",image)) 11px 6px no-repeat;}
+    div.venue .head a{background:transparent url(asset-path("icons/browse-venue.png",image)) 11px 6px no-repeat;}
+    #event_calendar{width:243px;margin:0px auto 10px auto;}
+    .browse .browser p{padding:0 0 0 10px;margin:0;}
+    .browse .browser ul{margin-top:5px;list-style:none;}
+    .browse .browser ul li a{font-weight:bold;}
+    .browse .browser ul li.icon{}
+    .browse .browser ul li.icon a{
+      display:block;
+      height:20px;
+      margin-bottom:10px;
+      padding-left:24px;
+    }
+    .browse .browser ul li.arts_and_culture a{
+      background:transparent url(asset-path("categories/icon-arts.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.music a{
+      background:transparent url(asset-path("categories/icon-music.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.nightlight a{
+      background:transparent url(asset-path("categories/icon-nightlight.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.education a{
+      background:transparent url(asset-path("categories/icon-education.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.outdoor a{
+      background:transparent url(asset-path("categories/icon-outdoor.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.sports a{
+      background:transparent url(asset-path("categories/icon-sports.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.community a{
+      background:transparent url(asset-path("categories/icon-community.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.nightlife a{
+      background:transparent url(asset-path("categories/icon-nightlife.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.kids_and_family a{
+      background:transparent url(asset-path("categories/icon-kidsfamily.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.organization a{
+      background:transparent url(asset-path("venuecategories/icon-venue-organization.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.business a{
+      background:transparent url(asset-path("venuecategories/icon-venue-business.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.sports a{
+      background:transparent url(asset-path("venuecategories/icon-venue-sports.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.museum a{
+      background:transparent url(asset-path("venuecategories/icon-venue-museum.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.academic a{
+      background:transparent url(asset-path("venuecategories/icon-venue-academic.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.public_space a{
+      background:transparent url(asset-path("venuecategories/icon-venue-public_space.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.theater a{
+      background:transparent url(asset-path("venuecategories/icon-venue-theater.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.bar_club a{
+      background:transparent url(asset-path("venuecategories/icon-venue-bar_club.png",image)) 0px 1px no-repeat;
+    }
+    .browse .browser ul li.restaurant a{
+      background:transparent url(asset-path("venuecategories/icon-venue-restaurant.png",image)) 0px 1px no-repeat;
+    }
+  }
+
+
+
+
+  /* Side Bar Ad Spaces */
+  .ad{
+    @include p_reset;
+    min-height:100px;
+    margin:10px 0;
+  }
+  .full_ad{
+    @include p_reset;
+    width:250px;
+    margin-bottom:5px;
+    img{max-width:250px; max-height:250px; }
+  }
+  .ad_double{
+    @include p_reset;
+    .ad_single{
+      @include p_reset;
+      width:120px;
+      img{ max-width:120px; max-height:240px; }
+    }
+
+  }
+
+
+
+  /* My calendar widget */
+  .mycalendar{
+    background-color:$dark_blue;
+    margin:10px 0;
+    h2{
+      font-weight:normal;
+    }
+    p.control{
+
+      a{
+        color:#fff;
+        font-size:12px;
+        font-family:$font-sans;
+        &:hover{
+          color:$orange;
+        }
+      }
+      .signin a{text-decoration:underline;}
+    }
+    div.calendar_events {
+      background-color:$dark_blue;
+      margin:10px 0 5px 0;
+      ul{
+        padding:5px 10px;
+        li {
+          border-bottom:1px $highlight_blue solid;
+          padding-bottom:4px;
+          margin-bottom:5px;
+          a{color:#fff;}
+        }
+      }
+    }
+
+  }
+
+}
+
+
+#event_calendar{
+  text-align:center;
+}
+
+
+#event_calendar table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.ui-datepicker{
+  font-size:14px;
+}
+
+
+
+
+/* Buttons */
+a.add_event_button{
+  display:block;
+  width:97px;height:15px;
+  text-indent:-9999px;
+  background:transparent url( asset-path("buttons/add-event-button.png",image) ) 0 0 no-repeat;
+}
+a.add_venue_button{
+  display:block;
+  width:93px;height:15px;
+  text-indent:-9999px;
+  background:transparent url( asset-path("buttons/add-venue-button.png",image) ) 0 0 no-repeat;
+}
+.heading {
+  a.add_event_button, a.add_venue_button{margin-top:10px;}
+}
+
+
+/* Venue and Event Google Map */
+#map_canvas{
+  img{max-width:none;}
+  margin:5px auto;
+  box-shadow: 0 0 5px #888;
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-box-shadow: 0 0 5px#888;
+  .border_top{
+    font-size:11px;
+    padding-top:6px;
+    padding-bottom:0;
+    color:$highlight_blue;
+    border-top:2px $pale_blue solid;
+    a{color:$orange;}
+  }
+}
+.venue_show #map_canvas{
+  width:655px;
+  height:320px;
+}
+.event_show #map_canvas{
+  width:570px;
+  height:320px;
+}
+
+
+
+/* Ad Page wrap */
+a.ad_page_wrap{
+  z-index:  -10;
+  position:absolute;
+  top:0;
+  width:100%;
+  text-align:center;
+  margin:0;
+  display:none;
+  max-width:none;
+}
+
+a.ad_page_wrap img{
+  position:absolute;
+  top:0;
+  left:50%;
+  margin-left:-800px;
+  max-width:1600px;
+  width:1600px;
+}
+
+
+
+/* Popular Events Homepage */
+.popular_events{
+  width:225px;
+  float:right;
+  @include p_reset;
+  h2{
+    @include p_reset;
+    font-weight:normal;
+    font-size:20px;
+  }
+  ul{
+    @include p_reset;
+    margin-top:10px;
+    list-style:none;
+    li{
+      min-height:46px;
+      border-bottom:1px solid #c2c2c1;
+      margin-bottom:5px;
+      p{
+        @include p_reset;
+        font-size:12px;
+        line-height:12px;
+        a{
+          color:$dark_blue;
+          font-weight:bold;
+          font-size:12px;
+          line-height:12px;
+        }
+        span{
+          display:block;
+          font-size:12px;
+        }
+      }
+
+    }
+  }
+
+}

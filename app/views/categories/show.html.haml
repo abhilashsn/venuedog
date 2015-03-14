@@ -1,0 +1,63 @@
+#content.page.event_show
+  = render "/shared/breadcrumbs"
+  %h1
+    = "#{@category.name} Events"
+
+  - if @category.root?
+    / Subcategory Widget
+    #narrow.children.floatrightnarrow
+      %ul.narrow
+        %li.head Narrow it down
+        - @category.children[0..5].sort_by{|c| c.name}.each do |child|
+          %li
+            %p= link_to child.name, category_path(@city, child)
+
+    / Featured Event Widget
+    - if !@featured_event.blank?
+      #featured_event_container
+        = image_tag @featured_event.image? ? @featured_event.image.url(:category_show_featured) : default_image(@featured_event.categories,"240x175"), :class=>"shadow right"
+        %h2.half Featured Event
+        %p.title.half= @featured_event.name
+        %p.description= truncate( strip_tags(@featured_event.description), :length=>125).html_safe
+        %p.read_more= link_to "Learn more", event_path(@featured_event.city, @featured_event)
+        = clear
+    = clear
+  - else
+    / Subcategory Widget
+    #narrow.children.floatrightnarrow
+      %ul.narrow
+        %li.head
+          More in #{@category.root.name}
+        %li.foot
+          %p= link_to "&laquo; ".html_safe + @category.root.name, category_path(@city, @category.root)
+        - @category.siblings[0..5].sort_by{|c| c.name}.each do |child|
+          %li
+            %p= link_to child.name, category_path(@city, child)
+    / Featured Event Widget
+    - if !@featured_event.blank?
+      #featured_event_container
+        = image_tag @featured_event.image? ? @featured_event.image.url(:category_show_featured) : default_image(@featured_event.categories,"240x175"), :class=>"shadow right"
+        %h2.half Featured Event
+        %p.title.half= @featured_event.name
+        %p.description= truncate( strip_tags(@featured_event.description), :length=>125).html_safe
+        %p.read_more= link_to "Learn more", event_path(@featured_event.city, @featured_event)
+        = clear
+    = clear
+
+
+  / Events
+  .events
+    - @category_events.each do |e|
+      .event
+        = link_to image_tag( e.image? ? e.image.url(:category_event_thumb) : default_image(e.categories,"70x70"), :class=>"left"), event_path(e.city, e)
+        .details
+          %p.title= link_to e.name, event_path(e.city, e)
+          %p.when= event_time_and_venue(e)
+          %p.categories
+            Category: #{truncate(listify_categories(e.categories), :length=>50)}
+      = clear
+    = clear
+    = paginate @category_events
+= render "/shared/sidebar"
+- content_for :page_title, @category.name
+= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => @category.name, :og_description => "View the latest #{@category.name} events in Rome, GA"}

@@ -1,0 +1,82 @@
+#content_full.users_profile.users_calendar
+  = render "/shared/breadcrumbs"
+  %h2 My Calendar
+  / Profile Sidebar
+  .profile_sidebar.no_padding.left
+    / Profile Image and Name Card
+    .profile_card.dark_blue_gradient
+      %p.align_center.no_padding
+        = image_tag "user/default-user.jpg"
+      %p
+        %strong= @user.name
+        %span.right
+      %p
+        %strong= @user.email
+      %p
+        %em preferred city:
+      %h2.white.sans
+        %strong Rome, GA
+      %p.align_right.small.no_padding= link_to "Edit", edit_user_registration_path, :class=>"orange"
+    / Ad spaces on profile
+    .ad_wrap
+      = render "/ad_spaces/sidebar_main"
+    = clear
+  .content
+    / Alert
+    - if !notice.blank?
+      / New event notice
+      .alert.alert-success
+        %a.close{"data-dismiss" => "alert"} &times;
+        = notice
+    / Tabbed Upcoming and Archived Events
+    #tabs
+      %ul
+        %li
+          %a{:href => "#tabs-1"} Upcoming
+        %li
+          %a{:href => "#tabs-2"} Archived
+      #tabs-1.upcoming
+        - if !@calendar_events.blank?
+          %table.align_center
+            - @calendar_events.sort_by{ |x| x.event.start_time }.each do |e|
+              %tr
+                %td.name
+                  %strong= link_to e.event.name, event_path( e.event.city, e.event )
+                %td.small
+                  %em= link_to e.event.venue.name, venue_path( e.event.venue.city, e.event.venue )
+                %td.small
+                  %em= e.event.start_time.strftime("%A, %b. %e @ %l:%M %p")
+                %td.action.align_bottom
+                  = link_to "Remove", calendar_event_path(e),:method => "delete", :confirm => "Are you sure?", :class => "user_icons remove right"
+                  - if e.has_reminder
+                    = link_to "Reminder", {:controller => "calendar_events", :action => "reminder", :id => e.id}, :class=>"user_icons reminder-enabled right"
+                  - else
+                    = link_to "Reminder", {:controller => "calendar_events", :action => "reminder", :id => e.id}, :class=>"user_icons reminder right"
+        - else
+          %p.blank
+            There are currently no events in your calendar. Browse for events and add them to your calendar.
+            %br/
+            - if !@city.blank?
+              = link_to "Start browsing events", events_path(@city), :class=>"btn btn-info"
+      #tabs-2.archive
+        - if !@past_calendar_events.blank?
+          %table.align_center
+
+            - @past_calendar_events.each do |e|
+              - event = e.event
+              - if !event.city.blank? and !event.venue.blank?
+                %tr
+                  %td.name
+                    %strong= link_to( event.name, event_path( event.city, event ) )
+                  %td.small
+                    %em= link_to event.venue.name, venue_path( event.venue.city, event.venue )
+                  %td.small
+                    %em= event.start_time.strftime("%A, %b. %e @ %l:%M %p")
+        - else
+          %p.blank
+            You have no past calendar events.
+            %br/
+            - if !@city.blank?
+              = link_to "Start browsing events", events_path(@city), :class=>"btn btn-info"
+    / end tabs
+- content_for :page_title, "My Calendar"

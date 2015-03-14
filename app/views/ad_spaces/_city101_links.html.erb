@@ -1,0 +1,31 @@
+
+<!-- Two column ads -->
+
+<div class="ad ad_double city101_links">
+  <% if !@ads.blank? %>
+  <% @ads[10..16].each_with_index do |a, index| %>
+    <% if index % 2 == 0 %>
+  <div class="ad_single left">
+    <% if !a.blank? %>
+       <%= link_to( image_tag(a.image), a.destination, :onclick=> ga_ad_click(a.advertiser.name, a.name, a.destination), :target=>"_blank" ) %>
+      <% content_for :footer_js, ga_track_ad_impression(a) %>
+    <% else %>
+      <!-- Leave buffer, scopes pull by active date -->
+      <p class="align_center"><%= link_to "Claim this ad", "" %></p>
+    <% end %>
+  </div>
+  <% else %>
+  <div class="ad_single right">
+    <% if !a.blank? %>
+       <%= link_to( image_tag(a.image), a.destination, :onclick=> ga_ad_click(a.advertiser.name, a.name, a.destination), :target=>"_blank" ) %>
+      <% content_for :footer_js, ga_track_ad_impression(a) %>
+    <% else %>
+      <!-- Leave buffer, scopes pull by active date -->
+      <p class="align_center"><%= link_to "Claim this ad", "" %></p>
+    <% end %>
+  </div>
+  <%= clear %>
+    <% end %>
+  <% end %>
+<% end %>
+</div>

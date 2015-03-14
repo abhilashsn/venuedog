@@ -1,0 +1,15 @@
+<div id="content" class="page">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h2><%= @page.title %></h2>
+ 
+  <%= @page.content.html_safe %>
+  <%= clear %>
+</div>
+
+<%= render "/pages/sidebar" %>
+
+
+
+<% content_for :page_title, @page.title %>

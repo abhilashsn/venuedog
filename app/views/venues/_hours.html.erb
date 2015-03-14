@@ -1,0 +1,59 @@
+
+<% if @venue.has_hours? %>
+
+  <h2>Hours</h2>
+  
+  <% if @venue.hours_override.blank? %>
+   
+      <table>
+        <% if !@venue.monday.blank? %>
+        <tr>
+          <td><strong>Mondays</strong></td>
+          <td><%= @venue.monday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.tuesday.blank? %>
+        <tr>
+          <td><strong>Tuesdays</strong></td>
+          <td><%= @venue.tuesday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.wednesday.blank? %>
+        <tr>
+          <td><strong>Wednesdays</strong></td>
+          <td><%= @venue.wednesday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.thursday.blank? %>
+        <tr>
+          <td><strong>Thursdays</strong></td>
+          <td><%= @venue.thursday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.friday.blank? %>
+        <tr>
+          <td><strong>Fridays</strong></td>
+          <td><%= @venue.friday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.saturday.blank? %>
+        <tr>
+          <td><strong>Saturdays</strong></td>
+          <td><%= @venue.saturday %></td>
+        </tr>
+        <% end %>
+        <% if !@venue.sundays.blank? %>
+        <tr>
+          <td><strong>Sundays</strong></td>
+          <td><%= @venue.sundays %></td>
+        </tr>
+        <% end %>
+    </table>
+
+  <% else %>
+
+    <div class="hours_override"><%= @venue.hours_override %></div>
+
+  <% end %>
+
+<% end %>

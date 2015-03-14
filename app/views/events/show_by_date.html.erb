@@ -1,0 +1,54 @@
+<div id="content" class="page event event_index event_show">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <p id="notice"><%= notice %></p>
+
+  <div id="show_by_date_ad">
+    <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-5357719187408593";
+      /* 468x60 Banner */
+      google_ad_slot = "9522963019";
+      google_ad_width = 468;
+      google_ad_height = 60;
+      //-->
+      </script>
+     <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+  </div>
+
+
+  <div class="">
+      <h2 class="sans"><%= @started_at.strftime("%a %B %e, %Y") %></h2>
+
+      <!-- Events -->
+      <div class="events">
+        <% @events.each do |e| %>
+          <div class="event">
+            <%= link_to image_tag( e.image? ? e.image.url(:category_event_thumb) : default_image(e.categories,"70x70"), :class=>"left"), event_path(e.city, e) %>
+            <div class="details">
+              <p class="title"><%= link_to e.name, event_path(e.city, e) %></p>
+              <p class="when"><%= event_time_and_venue(e) %></p>
+              <p class="categories">Category: <%= truncate(listify_categories(e.categories), :length=>50) %></p>
+            </div>
+          </div>
+          <%= clear %>
+        <% end %>
+        <%= clear %>
+      </div>
+
+      <%= clear %>
+  </div><!-- end day-->
+
+  <div id="date_paginate">
+    <ul>
+      <li><%= link_to("&laquo; Previous Day".html_safe, "/#{@city.slug}/show-by-date/" + (@started_at - 1).strftime("%Y-%m-%d")) %></li>
+      <li><%= @started_at.strftime("%a %B %e, %Y")  %></li>
+      <li><%= link_to("Next Day &raquo;".html_safe, "/#{@city.slug}/show-by-date/" + (@started_at + 1).strftime("%Y-%m-%d")) %></li>
+    </ul>
+  </div>
+
+</div>
+<%= render "/shared/sidebar" %>
+
+<% content_for(:page_title, "Events on " + @started_at.strftime("%B %e, %Y").to_s) %>
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title =>  "Events on #{@started_at.strftime("%B %e, %Y").to_s}", :og_description => "Events, Venues, Calendars, and what to do in Rome, GA"} %>

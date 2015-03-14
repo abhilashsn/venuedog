@@ -1,0 +1,11 @@
+/**
+ *  application-main.css
+ *
+ *= require vendor
+ *= require_self
+ *= require fancybox
+ *= require default
+ *= require nivo-slider
+ *= require "fonts/application-fonts"
+ *= require_tree ./main
+*/

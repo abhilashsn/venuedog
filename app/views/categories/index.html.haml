@@ -1,0 +1,21 @@
+#content.page.category.category_index
+  = render "/shared/breadcrumbs"
+
+  %h2 Browse by Category
+
+  / Category with image
+  %ul.index.unstyled
+    - Category.roots.each_with_index do |cat, i|
+      %li.left.half_width
+        %p.head= link_to( cat.name, category_path(@city, cat) )
+
+        %p{:class => "icon #{sanitize_name(cat.name)}"}
+          / Subcategories
+          - cat.descendants.sort!{ |a,b| a.name.downcase <=> b.name.downcase }.each do |subcat|
+            = link_to( subcat.name, category_path(@city, subcat) )
+      = clear_li if i.odd?
+  = clear
+
+= render "/shared/sidebar"
+- content_for :page_title, "Event Categories"
+= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Event Categories", :og_description => "View the latest events in #{@city.name}, #{@city.state}"}

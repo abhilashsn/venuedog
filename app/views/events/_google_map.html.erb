@@ -1,0 +1,73 @@
+<% @venue = @event.venue %>
+
+<% google_link = "http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=" + CGI::escape(@venue.google_address) + "&amp;aq=0&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=" + CGI::escape(@venue.google_address) + "&amp;t=m&amp;z=14" %>
+
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
+
+  var geocoder;
+  var map;
+  var venue_name = "<%= @venue.name %>";
+  var venue_link = '<%= link_to @venue.formatted_address, google_link.html_safe, :target=>"_blank" %>';
+  var query = "<%= @venue.google_address %>";
+   
+  /* Initialize Map */
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var myOptions = {
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    codeAddress();
+  }
+
+  /* GEO Code Given Address in var query */
+  function codeAddress() {
+    var address = query;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+              map: map, 
+              position: results[0].geometry.location,
+              icon: "/assets/icons/map-marker.png"
+        });
+        marker.setTitle( venue_name );
+
+        var infowindow = new google.maps.InfoWindow({content: getBoxContent()});
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+
+      }else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+
+  /* Return HTML content for hover box on marker for map */
+  function getBoxContent(){
+    content = '<p><strong>' + venue_name + '</strong></p><p>' + venue_link + '</p>';
+    <% events_count = @venue.events.upcoming.count %>
+    <% if events_count > 0 %>
+      content = content + '<p><%= link_to "Upcoming Events", @venue, :class => "dark_blue" %>: <%= events_count %>'; 
+    <% end %>
+
+    content = content + '<p class="border_top"><%= link_to "Get Directions", google_link.html_safe, :target=>"_blank" %>' +
+              ' | <%= link_to "Create Event Here", new_event_path%></p>';
+  
+    return content;
+  }
+
+
+  /* Run Google Map creator */
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+<div id="map_canvas"></div>
+<p class="no_padding align_right">
+  <%= link_to "View Larger Map", google_link.html_safe, :target=>"_blank" %>
+</p>

@@ -1,0 +1,103 @@
+<div class="featured_wrap">
+
+  <!-- What to do Widget -->
+  <div class="widget todo">
+    <h2>What to do...</h2>
+    <div class="callout">
+      <div class="action"><a class="find" href="<%= events_path %>">Find something<br />to do</a></div>
+      <div class="action"><a class="add_event" href="<%= new_event_path %>">Add an Event<span>(it's free!)</span></a></div>
+      <div class="action"><a class="modify_venue" href="<%= venues_path %>">Browse Venues</a></div>
+      <div class="action"><a class="advertise" href="/advertise-with-us">Advertise with<br />Venue Dog</a></div>
+    </div>
+  </div>
+
+
+  <!-- Featured Image Scroller -->
+  <div class="featured widget">
+    <p class="header">Featured Events</p>
+    <div id="feature" class="slider-wrapper theme-default">
+    <div id="slider" class="nivoSlider">
+    <% if !@slides.empty? %>
+      <% @slides.each do |s| %>
+        <%= link_to( image_tag( s.image.url, :alt => "Featured VenueDog Event"), s.url.blank? ? '#' : s.url )%>
+
+      <% end %>
+    <% else %>
+        <a href=<%= events_path %>><img src="<%= asset_path 'homepage_slider/default-slider.jpg' %>" alt="Featured" /></a>
+    <% end %>
+  </div>
+</div>
+
+  </div>
+
+  <%= clear %>
+</div>
+
+
+
+<div id="content" class="homepage">
+
+  <!-- Featured Venue Widget -->
+  <div class="featured_venue widget dark_blue_gradient">
+    <% @featured_venue = @city.venues.featured.first %>
+    <h2>Featured Venue</h2>
+    <div class="callout light_blue_gradient">
+      <h3><%= @featured_venue.name %></h3>
+      <p>
+        <%= image_tag @featured_venue.image? ? @featured_venue.image.url(:homepage_featured) : "http://placehold.it/230x150", :class=> "left" %>
+        <%= truncate(strip_tags(@featured_venue.description), :length => 150).html_safe %>
+        <span class="bottom_right"><%= link_to "Read More", venue_path(@featured_venue) %></span>
+      </p>
+      <%= clear %>
+    </div>
+  </div>
+
+
+  <!-- Featured Events Widget -->
+  <div class="popular_events">
+    <h2>Popular Events</h2>
+    <ul class="unstyled">
+      <% @city.events.popular_homepage.each do |e| %>
+        <li>
+          <p>
+            <%= image_tag e.image? ? e.image.url(:featured_small) : default_image(e.categories, "42x42"), :class=>"left shadow" %>
+            <%= link_to e.name, event_path(e.city, e) %>
+            <span><%= e.start_time.strftime('%A, %b. %d %Y ') %></span>
+          </p>
+          <%= clear %>
+        </li>
+      <% end %>
+    </ul>
+    <%= clear %>
+  </div>
+
+  <%= clear %>
+
+
+
+  <!-- Categories and Events table -->
+  <div class="categories category_table">
+    <% @categories.each_with_index do |cat, i| %>
+      <ul class="category left category_row<%= if i < 4 then "1" else "2" end %>">
+        <li class="title orange_gradient"><%= link_to cat.name, cat %></li>
+        <% ev = get_events(cat) %>
+
+        <% if ev.length > 0 %>
+          <% ev.each do |e| %>
+            <li class="event"><%= link_to e.name, event_path(e.city, e) %> <span><%= e.start_time.strftime("%A, %B %e @ %l:%M %p ") %></span></li>
+          <% end %>
+
+          <li class="foot"><%= link_to "See All", category_path(cat) %></li>
+        <% end %>
+      </ul>
+      <%= clear if (i+1).modulo(4) == 0 %>
+    <% end %>
+  </div>
+
+
+  <%= clear %>
+</div>
+
+<%= render "/shared/sidebar" %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Venue Dog" } %>

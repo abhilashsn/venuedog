@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  start: 2012-01-26 15:25:46
+  end: 2012-01-26 15:25:46
+  size: MyString
+  destination: MyString
+  image: MyString
+  notes: MyText
+  category: 
+  locations: MyString
+
+two:
+  name: MyString
+  start: 2012-01-26 15:25:46
+  end: 2012-01-26 15:25:46
+  size: MyString
+  destination: MyString
+  image: MyString
+  notes: MyText
+  category: 
+  locations: MyString

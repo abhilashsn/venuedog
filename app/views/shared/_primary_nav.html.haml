@@ -1,0 +1,10 @@
+.primary_nav
+  %ul
+    %li= link_to "Home", '/'
+
+    - if !@city.blank?
+      - Category.roots.each do |m|
+        %li= link_to m.name, category_path(@city, m)
+
+    - if !@city.blank? and !@city.city101.blank?
+      %li= link_to "City101", city_101_path( @city )

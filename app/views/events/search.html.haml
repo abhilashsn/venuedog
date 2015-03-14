@@ -1,0 +1,64 @@
+#content.page.event.event_index.search
+
+  = render "/shared/breadcrumbs"
+
+  %h1
+    Results for:
+    %em= params[:search]
+
+  / Category Results
+  - if !@categories.blank?
+    %h2 Categories
+    %ul.unstyled.categories
+      - @categories.each do |cat|
+        %li.left= link_to cat.name, category_path( @city, cat )
+      = clear_li
+
+
+  / Event Results
+  - if !@events.blank?
+    %h2 Upcoming Events
+    .events
+      - @events[0...6].each do |e|
+        .event
+          = link_to image_tag( e.image? ? e.image.url(:category_event_thumb) : default_image(e.categories,"70x70"), :class=>"left"), event_path( e.city, e )
+          .details
+            %p.title= link_to e.name, event_path(e.city, e)
+            %p.when= event_time_and_venue(e)
+            %p.categories
+              Category: #{truncate(listify_categories(e.categories), :length=>50)}
+        = clear
+      = clear
+
+
+  / Venue Results
+  - if !@venues.blank?
+    %h2 Local Venues
+    %ul.unstyled.categories
+      - @venues[0...10].each do |v|
+        %li
+        = link_to( v.name, venue_path(@city, v) )
+      = clear_li
+  - if @venues.blank? and @events.blank? and @categories.blank?
+    %p
+      We couldn't find anything that matches
+      = succeed "." do
+        %em= params[:search]
+      Try searching again, or use the links below:
+    %ul.unstyled
+      %li
+        %strong= link_to "View this week's events", events_path(@city), :class=>"orange"
+      %li
+        %strong= link_to "Browse all categories", categories_path(@city), :class=>"orange"
+      %li
+        %strong= link_to "See all venues", venues_path(@city), :class=>"orange"
+      %li
+        %strong= link_to "Go back to home page", "/", :class=>"orange"
+  %br/
+
+
+
+= render "/shared/sidebar"
+- content_for :page_title, "Upcoming Events in #{@city.name}"
+
+= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Upcoming Events in your area", :og_descritpion => "Events, Venues, Calendars, and what to do in Rome, GA" }

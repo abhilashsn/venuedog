@@ -1,0 +1,199 @@
+$orange: #E75A3E;
+$dark_blue: #123757;
+$highlight_blue: #59738A;
+$pale_blue: #E8EEF3;
+$light_blue: #D8ECFC;
+$grey:#a4a4a4;
+
+$page-width:960px;
+
+$main-horizontal-padding:15px;
+$main-vertical-padding:15px;
+$footer-wrap-width: 1016px;
+$footer-wrap-height: 80px;
+$z-top:100;
+$z-mid:50;
+$z-bot:0;
+
+$font-sans:"Droid Sans", arial, helvetica, sans-serif;
+$font-serif: "museo-slab", Georgia, serif;
+
+.centered {
+
+  text-align:center;
+
+}
+
+/* Styles for Users Sessions and Registrations */
+.users_new, .sessions_new, .users_edit{
+  h2{
+    font-weight:normal;
+    font-size:36px;
+  }
+  p.fb{
+    font-size:16px;
+    line-height:20px;
+    color:$highlight_blue;
+    margin-bottom:20px;
+  }
+  .facebook_login{
+    text-align:center;
+    a{
+      display:block;
+      width:160px;
+      height:28px;
+      margin:0 auto;
+      background:transparent url(asset-path("buttons/facebook_connect.png",image)) 0 0 no-repeat;
+      text-indent:-9999px;
+    }
+  }
+  .sign_up_or{
+    p{
+      text-align:center;
+      width:500px;
+      margin:40px auto;
+      background:transparent url(asset-path("events/e9e9e9.png",image)) 0 50% repeat-x;
+      span{
+        font-size:18px;
+        color:$dark_blue;
+        font-style:italic;
+        padding:0 9px 0 7px;
+        background:#fff;
+      }
+    }
+  }
+  ul{
+    padding:10px 0;
+    margin:0 0 40px 0;
+    li.half_width{
+      margin:10px 0;
+      input{width:90%;}
+    }
+  }
+  .devise_links{
+  }
+  span.small{font-size:10px;}
+
+}
+
+.sessions_new{
+  ul{
+    padding:10px 0;
+    margin:0 0 0px 0;
+  }
+}
+
+
+
+/* User Dashboard */
+.users_profile{
+  .quarter_width{
+    width:25%;
+  }
+  .profile_sidebar{
+    width:250px;
+  }
+  .content{
+    width: 650px;
+    padding: 0px 5px 0px 15px;
+    float: right;
+    min-height: 200px;
+
+    table{width:100%;}
+
+    .calendar, .event_listings{
+      background-color:$pale_blue;
+      margin-bottom:45px;
+    }
+  }
+
+  .profile_card{
+    background:$dark_blue;
+    padding:10px;
+    color:#fff;
+  }
+  .suggested_events{
+    margin:20px 0;
+    h3{
+      line-height:22px;
+      margin-bottom:6px;
+    }
+  }
+  .ad_wrap{
+    margin:10px 0;
+    .full_ad{ margin-bottom:5px;}
+  }
+
+  .ui-state-hover{
+    border: 1px solid white;
+  }
+
+  .see_all{ padding:5px 15px 10px 0; a{color:$orange;}}
+}
+
+
+/* Profile table */
+.users_profile {
+  table{
+    border-collapse:separate;
+    .name{color:$dark_blue;}
+    padding:3px 8px;
+    td{
+      border-bottom:1px $grey solid;
+      padding-right:5px;
+    }
+    td.name a{color:$dark_blue;font-weight:normal}
+    td.small{font-size:13px;}
+  }
+  p.blank{
+    padding:10px;
+    .btn{margin-top:10px;color:#fff}
+  }
+}
+
+
+
+
+
+/* User Action buttons with hover states */
+.users_profile table .action{
+  white-space:nowrap;
+  min-width:105px;
+  .right{margin-left:1px;}
+
+  a.user_icons{
+    background:transparent url( asset-path("buttons/user-action-icons.png", image) ) 0 0 no-repeat;
+    display:block;text-indent:-9999px;
+    width:50px;height:45px;
+  }
+
+  a.reminder{
+    background-position:-25px -24px;
+    &:hover{ background-position:-25px -87px; }
+  }
+  a.reminder-enabled{
+    background-position:-25px -87px;
+  }
+  a.remove{
+    background-position:-125px -24px;
+    &:hover{ background-position:-125px -87px; }
+  }
+  a.view{
+    background-position:-225px -24px;
+    &:hover{ background-position:-225px -86px; }
+  }
+  a.edit{
+    background-position:-323px -23px;
+    &:hover{ background-position:-323px -87px; }
+  }
+  a.remove_gray{
+    background-position:-425px -24px;
+    &:hover{ background-position:-425px -87px; }
+  }
+  a.traffic{
+    background-position:-525px -24px;
+    &:hover{ background-position:-525px -87px; }
+  }
+
+
+}

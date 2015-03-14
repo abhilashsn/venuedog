@@ -1,0 +1,13 @@
+/ Header Ad
+.ad_space
+  - on_city_homepage? ? @ad = (@city.blank? ? nil : @city.ads.header_470x60.on_homepage.first) : @ad = (@city.blank? ? nil : @city.ads.header_470x60.first)
+  - if !@ad.blank?
+    = link_to( image_tag( @ad.image), @ad.destination, :onclick=>ga_ad_click(@ad.advertiser.name, @ad.name, @ad.destination), :target=>"_blank" )
+    - content_for :footer_js, ga_track_ad_impression(@ad)
+  - else
+    / Leave buffer, scopes pull by active date
+    %p.align_center= link_to "Claim this ad", "/advertise-with-us/"
+- if !@ad.blank?
+  - if @ad.page_wrap?
+    - content_for :page_wrap_ad do
+      = link_to( image_tag(@ad.page_wrap), @ad.destination, :class=>"ad_page_wrap", :onclick=>ga_ad_click(@ad.advertiser.name, @ad.name, @ad.destination), :target=>"_blank", :alt => @ad.background_color )

@@ -1,0 +1,159 @@
+= form_for @event, :url => ( @event.id.blank? ? create_event_path( @city ) : update_event_path( @city, @event ) ), :html => { :multipart => true } do |f|
+
+  / Basic
+  .basic.left
+
+    / Error Message
+    - if @event.errors.any?
+      .alert.alert-error
+        %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+        %h4.alert-heading
+          = pluralize(@event.errors.count, "error")
+          prohibited this event from being saved:
+        %ul
+          - @event.errors.full_messages.each do |msg|
+            %li
+              %em= msg
+
+    / Success Message
+    - if !notice.blank?
+      .alert.alert-success
+        %a.close{"data-dismiss" => "alert"} &times;
+        = notice
+    .field
+      = f.label :name, "Event name *"
+      = f.text_field :name, :required=>"required", :maxlength=>"40"
+    .field
+      = f.label :start_time, "Start *"
+      = f.text_field :start_time_date, :placeholder=>"mm/dd/yyyy", :class=>"date", :required=>"required", :value => (@event.start_time.strftime("%m/%d/%Y") if !@event.start_time.blank?)
+      = f.text_field :start_time_clock, :placeholder=>"time...", :class=>"time", :required=>"required", :value => (@event.start_time.strftime("%l:%M %p") if !@event.start_time.blank?)
+      = f.label :end_time, "End"
+      = f.text_field :end_time_date, :placeholder=>"mm/dd/yyyy", :class=>"date",:value => (@event.end_time.strftime("%m/%d/%Y") if !@event.end_time.blank?)
+      = f.text_field :end_time_clock, :placeholder=>"time...", :class=>"time", :value => (@event.end_time.strftime("%l:%M %p") if !@event.end_time.blank?)
+    .field
+      = f.check_box :all_day
+      = f.label :all_day, "This is an all day event", :class=>"inline"
+    = clear
+
+
+  / Photo
+  .right.align_center{:style => "margin-right:5px;"}
+    = image_tag "events/upload-photo.jpg" if !@event.image?
+    = image_tag( @event.image, :class=>"edit_preview_event" )if @event.image?
+    %p.align_center= f.file_field :image
+  = clear
+
+
+  / Location
+  .location.left
+    = f.label :location, "Location *"
+    .venue.left
+      %p Choose an existing Venue in your area.
+      - if controller.action_name != "edit"
+        = collection_select(:event, :venue_id, @city.venues.real_venues_ordered.sort!{ |a,b| a.name.downcase <=> b.name.downcase }, :id, :name, options = {:class=>"allow_single_deselect", :include_blank => true}, html_options= { :"data-placeholder"=>"Choose a Venue..." } )
+      - else
+        = collection_select(:event, :venue_id, @city.venues.real_venues_ordered.sort!{ |a,b| a.name.downcase <=> b.name.downcase }, :id, :name, options = {:class=>"allow_single_deselect", :include_blank => true}, html_options= { :"data-placeholder"=>"Choose a Venue..." } )
+      %p
+        %em Start typing a venue name.
+      = clear
+    %p.vertical_divider.left
+      %span.bar>
+      or
+      %span.bar
+    .create_location.right
+      %p Enter your event's location (if it's not at an official venue)
+      - if !@event.venue.blank? or controller.action_name == "new"
+        = f.fields_for :venue_attributes do |ff|
+          = ff.text_field :name, :placeholder=>"Location name", :class=>"block name", :value=> (@venue.name if !@venue.is_venue?)
+          = ff.text_field :street_address, :placeholder=>"Address", :class=>"block", :value=> (@venue.street_address if !@venue.is_venue?)
+          = ff.text_field :city_name, :placeholder=>"City", :class=>"left city", :value=> (@venue.city_name if !@venue.is_venue?)
+          = ff.text_field :state, :placeholder=>"State", :class=>"left state",  :maxlength=>"2", :value=> (@venue.state if !@venue.is_venue?)
+          = ff.text_field :zip, :placeholder=>"ZIP", :class=>"left zip", :value=> (@venue.zip if !@venue.is_venue?)
+          / Fake Venue ID
+          - if controller.action_name == "edit"
+            = ff.hidden_field :venue_id, :value=> (@event.venue_id if !@event.venue.blank? and !@event.venue.is_venue?)
+      = clear
+    = clear
+
+
+  / Event Tags
+  .tags.right
+    %p.head
+      Tags
+      %span (choose all that apply)
+    %ul
+      - Label.all.each do |l|
+        %li
+          = check_box_tag "event[label_ids][]", l.id, @event.labels.include?(l)
+          = l.name
+  = clear
+
+
+  / Description
+  .description.left
+    .field
+      = f.label :description, "Description *"
+      %p Detail your event for potential attendees. The more complete your event listing, the more likely you are to have a great turnout! Are there special instructions about arrival, parking, ticketing, or other? Make sure to include them.
+      = f.text_area :description, :class=>"full_width", :required=>"required"
+    %ul.no_padding
+      %li.half_width.left
+        = f.label :price, "Price"
+        = f.text_field :price, :class=>"full_width"
+      %li.half_width.left
+        = f.label :event_host, "Host / Sponsoring Organization *"
+        = f.text_field :event_host, :class=>"full_width", :required=>"required"
+      %li.half_width.left
+        = f.label :website, "Event website"
+        = f.url_field :website, :class=>"full_width", :placeholder=>'http://example.com'
+      %li.half_width.left
+        = f.label :event_contact, "Contact email or phone*"
+        = f.text_field :event_contact, :class=>"full_width", :required=>"required"
+    = clear
+
+
+  / Categories
+  .categories.tags.right
+    %p.head Categories *
+    %ul
+      - Category.roots.each do |c|
+        %li.root
+          = check_box_tag "event[category_ids][]", c.id, @event.categories.include?(c), :class=>"parent"
+          = c.name
+          - if !c.leaf?
+            %ul.children
+              - c.descendants.each do |d|
+                %li
+                  = check_box_tag "event[category_ids][]", d.id, @event.categories.include?(d)
+                  = d.name
+  = clear
+  %br/
+  .action
+    = f.submit "Submit", :class=>"btn btn-orange"
+
+
+
+
+/ Full Venue Information
+#new_venue_info.modal.hide.fade
+  .modal-header
+    %a.close{"data-dismiss" => "modal", :href => "#"} &times;
+    %h3
+      %strong Suggest an official venue
+  .modal-body
+    = render '/venues/modal_form'
+  .modal-footer
+    %a.btn.btn-primary.submit{:href => "#"} Submit venue for review
+    %a.btn{"data-dismiss" => "modal", :href => "#"} Cancel
+
+
+
+/ Success Message for venue suggests
+#new_venue_success.modal.hide.fade
+  .modal-header
+    %a.close{"data-dismiss" => "modal", :href => "#"} &times;
+    %h3
+      %strong Thank You
+  .modal-body
+    %p.callout Thanks for your venue suggestion! We will review it, and if approved, it will be added as an official venue on VenueDog.
+  .modal-footer
+    %a.btn.btn-primary.submit{"data-dismiss" => "modal", :href => "#"} Return to event form

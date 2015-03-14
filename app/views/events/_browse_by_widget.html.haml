@@ -1,0 +1,51 @@
+/ Browse by Category Widget
+- if !@city.blank?
+  .browse_by
+  
+  
+    / Display calendar and register JSON needed for color scheme
+    - open = cookies[:browse_date].nil? ? '' : cookies[:browse_date] == '1' ? '' : 'hide'
+    - state = open == 'hide' ? 'plus' : 'minus'
+    .browse.date
+      %p.head
+        %a.browse_date{:href => ""}
+          Browse By Date
+          %span{:class => state}
+      %div{:class => "browser #{open} browse_by_date"}
+        #event_calendar{ :data => { :city_id => @city.id, :city_slug => @city.slug } }
+        = clear
+  
+  
+  
+    - open = cookies[:browse_category] == '1' ? '' : 'hide'
+    - state = open == 'hide' ? 'plus' : 'minus'
+    .browse.event
+      %p.head
+        %a.browse_category{:href => events_path( @city )}
+          Browse By Category
+          %span{:class => state}
+      %div{:class => "browser #{open} browse_by_category"}
+        %p See events in each category:
+        %ul
+          - Category.roots.each do |c|
+            %li{:class => "icon #{sanitize_name(c.name)}"}= link_to c.name, category_path(@city, c)
+          %li= link_to "View All", categories_path(@city), :class=>"right"
+          = clear_li
+        = clear
+  
+  
+    - open = cookies[:browse_venue] == '1' ? '' : 'hide'
+    - state = open == 'hide' ? 'plus' : 'minus'
+    .browse.venue
+      %p.head
+        %a.browse_venue{:href => venues_path( @city )}
+          Browse By Venue
+          %span{:class => state}
+      %div{:class => "browser #{open} browse_by_venue"}
+        %p See events by Venue:
+        %ul
+          - VenueCategory.roots.each do |c|
+            %li{:class => "icon #{sanitize_name(c.name).sub("/","_")}"}= link_to c.name, venues_path(@city, :venue_category => c.id.to_s)
+          %li= link_to "View All", venues_path(@city), :class=>"right"
+          = clear_li
+        = clear

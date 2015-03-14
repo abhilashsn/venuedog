@@ -1,0 +1,86 @@
+<div id="content" class="page contact_us">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h2>Contact Venue Dog</h2>
+
+  <div class="contact right">
+    <%= @page.content.html_safe if !@page.content.blank? %>
+
+    <% if !flash[:notice].blank? %>
+      <div class="alert alert-info">
+        <a class="close" data-dismiss="alert" href="">&times;</a>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <!-- Contact Form -->
+    <%= form_tag "/system/send_contact_form" do %>
+      <ul class="unstyled">
+        <li class="left half_width">
+          <%= label :name, "Your Name *", :class=>"block" %>
+          <%= text_field_tag "contact[name]", nil, :required=>"required" %>
+        </li>
+        <li class="left half_width">
+          <%= label :email, "Email Address *", :class=>"block" %>
+          <%= email_field_tag "contact[email]", nil, :required=>"required" %>
+        </li>
+        <%= clear_li %>
+
+        <li class="left half_width">
+          <%= label :phone, "Phone Number", :class=>"block" %>
+          <%= text_field_tag "contact[phone]" %>
+        </li>
+        <li class="left half_width">
+          <%= label :subject, "Subject *", :class=>"block" %>
+          <%= text_field_tag "contact[subject]", nil, :required=>"required" %>
+        </li>
+        <%= clear_li %>
+      </ul>
+      <%= label :message, "Message *", :class=>"block" %>
+      <%= text_area_tag "contact[message]", nil, :required=>"required" %>
+      <%= clear %>
+
+      <%= submit_tag "submit", :class=>"btn btn-orange" %>
+    <% end %>
+
+  </div>
+
+
+
+  <ul class="contact_information left">
+    <li>
+      <p>
+        <span>VenueDog.com LLC</span>
+        <span>P.O. Box 489</span>
+        <span>Rome, GA 30161</span>
+      </p>
+    </li>
+    <li>
+      <p>
+        <span>(706) 383-7364</span>
+        <span><a href="mailto:info@venuedog.com">info@venuedog.com</a></span>
+      </p>
+    </li>
+  </ul>
+
+
+
+  <form class="right">
+
+  </form>
+
+
+
+  <%= clear %>
+
+</div>
+
+<%= render "/pages/sidebar" %>
+
+
+
+
+<% content_for :page_title, @page.title %>
+
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => @page.title } %>

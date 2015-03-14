@@ -1,0 +1,151 @@
+#content_full.users_profile
+
+  = render "/shared/breadcrumbs"
+
+  %h2 My Profile
+
+  / Profile Sidebar
+  .profile_sidebar.no_padding.left
+    / Profile Image and Name Card
+    .profile_card.dark_blue_gradient
+      %p
+        %strong= @user.name
+      %p
+        %strong= @user.email
+
+      - if !@user.city.blank?
+        %p
+          %em preferred city:
+        %h2.white.sans
+          %strong= "#{@user.city.name}, #{@user.city.state}"
+
+        = link_to "Change City", root_path
+
+      - else
+        %p= link_to "Choose your preferred city", root_path
+        
+    
+
+
+    / Ad spaces on profile
+    .ad_wrap
+      = render "/ad_spaces/sidebar_main"
+    = clear
+
+
+  / My Profile Calendars Main
+  .content
+    / Add events alert
+    - if @user.events.count < 1
+      .alert.alert-block.alert-info
+        %a.close{:href => "#"} ×
+        %p
+          %strong Have an event coming up?
+          = succeed "Adding" do
+            %br/
+          your event to Venue Dog is free and easy. Just fill out our new event form.
+        %br/
+        - if !@user.city.blank?
+          .alert-actions
+            %a.btn.small{:href => new_event_path(@user.city)} Get Started
+
+    / Alert
+    - if !notice.blank?
+      / New event notice thing
+      .alert.alert-success
+        %a.close{"data-dismiss" => "alert"} &times;
+        = notice
+
+    / Users Calendar
+    .calendar
+      %p.heading.dark_blue_gradient.no_padding My Calendar
+      - if !@calendar_events.blank?
+        %table.align_center
+          - @calendar_events.each do |e|
+            %tr
+              %td.name
+                %strong= link_to e.event.name, e.event
+              %td.small
+                %em= e.event.venue.is_venue? ? link_to(e.event.venue.name, e.event.venue) : e.event.venue.name
+              %td.small
+                %em= e.event.start_time.strftime("%A, %b. %e @ %l:%M %p")
+              %td.action.align_bottom
+                = link_to "Remove", calendar_event_path(e),:method => "delete", :confirm => "Are you sure?", :class => "user_icons remove right"
+                - if e.has_reminder
+                  = link_to "Reminder", {:controller => "calendar_events", :action => "reminder", :id => e.id}, :class=>"user_icons reminder-enabled right"
+                - else
+                  = link_to "Reminder", {:controller => "calendar_events", :action => "reminder", :id => e.id}, :class=>"user_icons reminder right"
+        %p.see_all.align_right= link_to "See All", "/profile/my-calendar"
+      - else
+        %p.blank
+          There are currently no events in your calendar. Browse for events and add them to your calendar.
+          %br/
+          - if !@user.city.blank?
+            = link_to "Start browsing events", events_path(@user.city), :class=>"btn btn-info"
+
+    / User's Events
+    .event_listings
+      %p.heading.orange_gradient.no_padding
+
+        My Posted Events 
+        - if !@user.city.blank?
+          #{link_to "Add An Event", new_event_path(@user.city), :class=>"add_event_button right"}
+
+      - if !@events.blank?
+        %table.align_center
+          - @events.each do |e|
+            %tr
+              %td.name.first
+                %strong= link_to e.name, event_path( e.city, e )
+              %td.small
+                %em= e.venue.is_venue? ? link_to(e.venue.name, venue_path( e.city, e.venue )) : e.venue.name
+              %td.small
+                %em= e.start_time.strftime("%A, %b. %e @ %l:%M %p")
+              %td.small
+                %em= people_attending_helper(e.calendar_events.count)
+              %td.action.align_bottom.last
+                = link_to "Remove", event_path(e.city, e), method: :delete, :confirm => "Are you sure?", :class => "user_icons remove right"
+                = link_to "Edit", edit_event_path(e.city, e), :class=>"user_icons edit right"
+                = link_to "View", event_path(e.city, e), :class=>"user_icons view right"
+        %p.see_all.align_right= link_to "See All", "/profile/my-event-listings"
+      - else
+        %p.blank
+          Have an event you want shown on VenueDog?
+          %br/
+          - if !@user.city.blank?
+            = link_to "Add your event", new_event_path(@user.city), :class=>"btn btn-info"
+
+
+    %p.centered
+      Promote Your Events on VenueDog.
+      %a.orange{:href => "/pages/promote-events"} Learn How
+
+
+    - if !@user.venues.real_venues_ordered.blank?
+      / Users Venues
+      .venue_listings
+        %p.heading.orange_gradient.no_padding
+          My Venues 
+          - if !@user.venues.blank?
+            #{link_to "Add A Venue", new_venue_path(@user.city), :class=>"add_venue_button right"}
+        %table.align_center
+          - @user.venues.real_venues_ordered.each do |v|
+            - if !v.blank?
+              %tr
+                %td.name.first
+                  %strong= link_to v.name, venue_path( v.city, v )
+                %td
+                  = events_count_helper(v.events.count)
+                %td
+                  - if v.is_venue == true
+                    = image_tag ("user/venue-checkmark.png")
+                    \&nbsp;Approved
+                  - else
+                    Pending...
+                %td.action.align_bottom.last
+                  = link_to "Remove", venue_path(v.city, v),:method => "delete", :confirm => "Are you sure?", :class => "user_icons remove right"
+                  = link_to "Edit", edit_venue_path(v.city, v), :class=>"user_icons edit right"
+                  = link_to "View", venue_path(v.city, v), :class=>"user_icons view right" if v.is_venue
+    = clear
+  = clear
+- content_for :page_title, "My Profile"

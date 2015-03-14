@@ -1,0 +1,125 @@
+<!-- Description list for Event Show -->
+
+<% alt = 0 %>
+
+<!-- When -->
+<li class="<%= "pale_blue" if alt.even? %>">
+  <p>
+    <span>When:</span>
+  
+    <% if @event.all_day %>
+      <%= @event.start_time.strftime("%A, %b. %e, %Y, All Day") %>
+    <% else %>
+      <%= @event.start_time.strftime("%A, %b. %e, %Y, %l:%M %p") %>
+
+      <% if !@event.end_time.blank? %>
+        - 
+        <br />
+        <%= @event.end_time.strftime("%A, %b. %e, %Y, %l:%M %p") %>
+      <% end %>
+
+    <% end %>
+  </p>
+
+  <% alt+=1 %>
+</li>
+
+
+
+<!-- Where -->
+<% if !@event.venue.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Where:</span>
+      <% if @event.venue.is_venue %>
+        <%= link_to @event.venue.name, venue_path(@event.venue.city, @event.venue) %>
+      <% else %>
+        <%= @event.venue.name %>
+      <% end %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+<!-- Location -->
+<% if !@event.venue.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Location:</span>
+      <%= @event.venue.street_address %><br />
+      <%= @event.venue.city_name.to_s  + ", "+ @event.venue.state.to_s  + " " + @event.venue.zip.to_s  %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+
+
+<!-- Price -->
+<% if !@event.price.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Price:</span>
+      <%= @event.price %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+
+<!-- Tickets -->
+<% if !@event.buy_tickets.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Tickets:</span>
+      <%= link_to "Buy Tickets", @event.buy_tickets, :target=>"_blank" %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+
+<!-- Host -->
+<% if !@event.event_host.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Host:</span> 
+      <%= @event.event_host %><%= clear %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+
+<!-- Contact -->
+<% if !@event.event_contact.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>Contact:</span>
+      <%= @event.event_contact %><%= clear %>
+    </p>
+  </li>
+  <% alt+=1 %>
+<% end %>
+
+
+
+<!-- Website -->
+<% if !@event.website.blank? %>
+  <li class="<%= "pale_blue" if alt.even? %>">
+    <p>
+      <span>More Info:</span>
+      <% if @event.website.length < 30 %>
+        <%= link_to @event.website, @event.website, :target=>"_blank" %><%= clear %>
+      <% else %>
+        <%= link_to "Visit Website", @event.website, :target=>"_blank" %><%= clear %>
+      <% end %>
+    </p>
+  </li>
+</li>
+<% end %>

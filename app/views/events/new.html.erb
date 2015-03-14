@@ -1,0 +1,15 @@
+<div id="content_full" class="page event event_new">
+
+  <%= render "/shared/breadcrumbs" %>
+
+  <h1>Add an event</h1>
+
+  <%= render 'form' %>
+
+
+</div>
+
+
+
+<% content_for :page_title, "Create a new event" %>
+<%= render :partial => 'shared/default_opengraph', :locals => {:current_page_title => "Create a new event", :og_description => "Events, Venues, Calendars, and what to do in Rome, GA" } %>
